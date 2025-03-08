@@ -1,0 +1,29 @@
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Boards\Domain\Entity\BoardChannel"
+            table="boards_board_channel"
+            repository-class="App\Boards\Infrastructure\Repository\BoardChannelRepository"
+    >
+        <id name="id" type="string" length="26">
+            <generator strategy="NONE"/>
+        </id>
+
+        <many-to-one field="board" target-entity="App\Boards\Domain\Entity\Board">
+            <join-column name="board_id"/>
+        </many-to-one>
+
+        <many-to-one field="channel" target-entity="App\Channels\Domain\Entity\Channel">
+            <join-column name="channel_id"/>
+        </many-to-one>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAt"/>
+        </lifecycle-callbacks>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setUpdatedAt"/>
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

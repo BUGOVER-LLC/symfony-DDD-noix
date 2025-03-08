@@ -1,0 +1,31 @@
+# vendor/bin/deptrac analyse --config-file=deptrac-layers.yaml
+
+parameters:
+  cache_file: ./var/dev/cache/.deptrac.cache
+  paths:
+    - ./src
+    - ./tests
+
+  layers:
+    - name: Domain
+      collectors:
+        - type: directory
+          value: /src/\w+/Domain/.*
+
+    - name: Application
+      collectors:
+        - type: directory
+          value: /src/\w+/Application/.*
+
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: /src/\w+/Infrastructure/.*
+
+  ruleset:
+    Domain:
+    Application:
+      - Domain
+    Infrastructure:
+      - Domain
+      - Application

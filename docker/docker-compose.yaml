@@ -1,0 +1,104 @@
+services:
+
+  php-fpm:
+    container_name: php-fpm
+    build:
+      context: ./../
+      dockerfile: ./docker/php-fpm/Dockerfile
+      args:
+        - PUID=${PUID}
+        - PGID=${PGID}
+        - ENABLE_XDEBUG=${ENABLE_XDEBUG}
+    environment:
+      - PHP_IDE_CONFIG="serverName=Docker"
+      - DATABASE_URL="postgresql://symfony:symfony@database/symfony?serverVersion=17&charset=utf8"
+    networks:
+      - dddapp
+    volumes:
+      - ./../:/var/www/
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - ${NGINX_HOST_HTTP_PORT}:80
+    volumes:
+      - ..:/var/www:rw
+    depends_on:
+      - php-fpm
+    networks:
+      - dddapp
+
+  database:
+    container_name: database
+    build:
+      context: ./database
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+    networks:
+      - dddapp
+
+  redis:
+    container_name: ${REDIS_CONTAINER_NAME:-redis}
+    restart: on-failure
+    image: redis:7.4-alpine
+    ports:
+      - "16379:6379"
+    networks:
+      - dddapp
+    volumes:
+      - 'redis_data:/data/redis'
+
+  minio:
+    image: docker.io/bitnami/minio:latest
+    ports:
+      - '9060:9000'
+      - '9061:9001'
+    networks:
+      - dddapp
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
+
+  mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+      # Uncomment the following line to disable HTTPS,
+      #SERVER_NAME: ':80'
+      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
+      MERCURE_EXTRA_DIRECTIVES: |
+        cors_origins http://127.0.0.1:888
+    # Comment the following line to disable the development mode
+    command: /usr/bin/caddy run --config /etc/caddy/dev.Caddyfile
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "https://localhost/healthz" ]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - mercure_data:/data
+      - mercure_config:/config
+
+networks:
+  dddapp:
+    driver: bridge
+
+volumes:
+  database_data:
+  minio_data:
+  redis_data:
+  mercure_data:
+  mercure_config:

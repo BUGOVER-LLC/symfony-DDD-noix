@@ -1,0 +1,31 @@
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Acl\Domain\Entity\PlanRole"
+            table="acl_plan_roles"
+            repository-class="App\Acl\Infrastructure\Repository\PlanRoleRepository"
+    >
+        <id name="id" type="string" length="26">
+            <generator strategy="NONE"/>
+        </id>
+
+        <many-to-one
+            field="plan"
+            target-entity="App\Acl\Domain\Entity\Plan"
+        />
+
+        <many-to-one
+            field="role"
+            target-entity="App\Acl\Domain\Entity\Role"
+        />
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setCreatedAt"/>
+        </lifecycle-callbacks>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setUpdatedAt"/>
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

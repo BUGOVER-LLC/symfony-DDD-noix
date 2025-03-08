@@ -1,0 +1,40 @@
+# vendor/bin/deptrac analyse --config-file=deptrac-modules.yaml
+
+parameters:
+  cache_file: ./var/dev/cache/.deptrac.cache
+  paths:
+    - ./src
+    - ./tests
+
+  exclude:
+    - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
+
+  layers:
+    - name: Shared
+      collectors:
+        - type: directory
+          value: /src/Shared/.*
+
+    - name: User
+      collectors:
+        - type: directory
+          value: /src/User/.*
+
+    - name: Workspaces
+      collectors:
+        - type: directory
+          value: /src/Workspaces/.*
+
+    - name: Channels
+      collectors:
+        - type: directory
+          value: /src/Channels/.*
+
+    - name: Acl
+      collectors:
+        - type: directory
+          value: /src/Acl/.*
+
+  ruleset:
+    User:
+      - Shared

@@ -1,0 +1,81 @@
+# https://symfony.com/doc/current/security.html
+
+security:
+  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
+  providers:
+    app_user_provider:
+      entity:
+        class: App\User\Domain\Entity\User
+        property: email
+
+  firewalls:
+    login:
+      pattern: ^/api/auth/v1/token
+      stateless: true
+      json_login:
+        username_path: email
+        check_path: /api/auth/v1/token
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+    api_token_refresh:
+      pattern: ^/api/auth/v1/refresh-token
+      stateless: true
+      refresh_jwt: ~
+      # or if you have more than one user provider
+      #provider: user_provider_name
+
+    api:
+      pattern: ^/api
+      stateless: true
+      jwt: ~
+
+    main:
+      lazy: true
+      provider: app_user_provider
+      security: true
+      login_throttling:
+        max_attempts: 3
+
+      logout:
+        path: /logout
+
+    # activate different ways to authenticate
+    # https://symfony.com/doc/current/security.html#the-firewall
+
+    # https://symfony.com/doc/current/security/impersonating_user.html
+    # switch_user: true
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/api/auth/v1/token, roles: PUBLIC_ACCESS }
+    - { path: ^/api/auth/v1/refresh-token, roles: PUBLIC_ACCESS }
+    - { path: ^/api/v1/(.*)/private, roles: [ IS_AUTHENTICATED_FULLY, ROLE_WORKSPACE_OWNER, WORKSPACE_ADMIN ] }
+    - { path: ^/api/v1/app/, roles: [ ROLE_WORKSPACE_FULL_MEMBER, ROLE_WORKSPACE_MEMBER ] }
+
+  role_hierarchy:
+    ROLE_WORKSPACE_OWNER: WORKSPACE_OWNER
+    ROLE_WORKSPACE_ADMIN: WORKSPACE_ADMIN
+    ROLE_WORKSPACE_FULL_MEMBER: WORKSPACE_FULL_MEMBER
+    ROLE_WORKSPACE_MEMBER: WORKSPACE_MEMBER
+    ROLE_CHANNEL_MANAGER: CHANNEL_MANAGER
+    ROLE_CHANNEL_GUEST: WORKSPACE_GUEST
+    ROLE_INVITED_MEMBER: INVITED_MEMBER
+
+when@test:
+  security:
+    password_hashers:
+      # By default, password hashers are resource intensive and take time. This is
+      # important to generate secure password hashes. In tests however, secure hashes
+      # are not important, waste resources and increase test times. The following
+      # reduces the work factor to the lowest possible values.
+      Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+        algorithm: argon2id
+        cost: 4 # Lowest possible value for bcrypt
+        time_cost: 4 # Lowest possible value for argon
+        memory_cost: 12 # Lowest possible value for argon
