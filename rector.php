@@ -15,6 +15,11 @@ return RectorConfig::configure()
     ])
     ->withPreparedSets(
         deadCode: true,
-        codeQuality: true
+        codeQuality: true,
     )
-    ->withComposerBased(twig: true, doctrine: true, phpunit: true, symfony: true);
+    ->withComposerBased(
+        twig: true,
+        doctrine: true,
+        phpunit: true,
+        symfony: true,
+    );

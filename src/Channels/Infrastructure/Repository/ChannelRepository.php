@@ -15,4 +15,12 @@ class ChannelRepository extends ServiceEntityRepository implements ChannelReposi
     {
         parent::__construct($registry, Channel::class);
     }
+
+    public function findAllChannelsByUserId(int $userId): array
+    {
+    }
+
+    public function findAllChannelsByUserIdWorkspaceId(int $userId, int $workspaceId): array
+    {
+    }
 }

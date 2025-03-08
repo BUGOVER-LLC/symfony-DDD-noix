@@ -21,4 +21,9 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
         $this->getEntityManager()->persist($workspace);
         $this->getEntityManager()->flush();
     }
+
+    #[\Override] public function findAllWorkspacesByUserId(int $userId): array
+    {
+        // TODO: Implement findAllWorkspacesByUserId() method.
+    }
 }
