@@ -38,6 +38,18 @@ class User implements AuthUserInterface
         $this->email = $email;
     }
 
+    public function getCurrentWorkspace(): ?Workspace
+    {
+        return $this->currentWorkspace;
+    }
+
+    public function setCurrentWorkspace(?Workspace $currentWorkspace): User
+    {
+        $this->currentWorkspace = $currentWorkspace;
+
+        return $this;
+    }
+
     public function getRefreshTokens(): Collection
     {
         return $this->refreshTokens;

@@ -19,7 +19,7 @@ trait Timestampable
 
     public function setUpdatedAt(): static
     {
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable('now');
 
         return $this;
     }
@@ -31,7 +31,7 @@ trait Timestampable
 
     public function setCreatedAt(): static
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable('now');
 
         return $this;
     }

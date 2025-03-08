@@ -53,6 +53,10 @@ services:
     resource: ../src/Channels/Infrastructure/Controller/
     tags: [ 'controller.service_arguments' ]
 
+  App\Workspaces\Infrastructure\Controller\:
+    resource: ../src/Workspaces/Infrastructure/Controller/
+    tags: [ 'controller.service_arguments' ]
+
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
 

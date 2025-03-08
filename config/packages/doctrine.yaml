@@ -61,6 +61,12 @@ doctrine:
         dir: '%kernel.project_dir%/src/Boards/Infrastructure/Database/ORM'
         prefix: 'App\Boards\Domain\Entity'
         alias: Channel
+      Message:
+        type: xml
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Messages/Infrastructure/Database/ORM'
+        prefix: 'App\Messages\Domain\Entity'
+        alias: Message
 
 #when@test:
 #  doctrine:
