@@ -8,7 +8,7 @@ use DateTimeImmutable;
 
 trait Timestampable
 {
-    private ?DateTimeImmutable $createdAt = null;
+    private DateTimeImmutable $createdAt;
 
     private ?DateTimeImmutable $updatedAt = null;
 
@@ -24,7 +24,7 @@ trait Timestampable
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }

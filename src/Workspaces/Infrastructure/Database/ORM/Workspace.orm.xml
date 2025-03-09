@@ -20,11 +20,13 @@
         <field name="name" column="name" type="string" length="300" unique="true"/>
         <field name="membersCount" column="members_count" type="smallint"/>
 
+        <field name="createdAt" column="created_at" type="date_immutable"/>
+        <field name="updatedAt" column="updated_at" type="date_immutable" nullable="true"/>
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
         </lifecycle-callbacks>
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="setUpdatedAt"/>
+            <lifecycle-callback type="preUpdate" method="setUpdatedAt"/>
         </lifecycle-callbacks>
     </entity>
 </doctrine-mapping>

@@ -11,7 +11,7 @@
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
         </lifecycle-callbacks>
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="setUpdatedAt"/>
+            <lifecycle-callback type="preUpdate" method="setUpdatedAt"/>
         </lifecycle-callbacks>
 
         <field column="scopes" name="scopes" type="json" nullable="true">

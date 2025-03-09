@@ -15,11 +15,12 @@
         <many-to-one field="user" target-entity="App\User\Domain\Entity\User"/>
         <many-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>
 
+        <field name="createdAt" column="created_at" type="date_immutable"/>
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
         </lifecycle-callbacks>
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="setUpdatedAt"/>
+            <lifecycle-callback type="preUpdate" method="setUpdatedAt"/>
         </lifecycle-callbacks>
     </entity>
 </doctrine-mapping>
