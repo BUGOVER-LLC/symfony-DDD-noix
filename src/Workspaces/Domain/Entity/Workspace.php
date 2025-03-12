@@ -22,7 +22,9 @@ class Workspace
 
     private string $name;
 
-    private int $membersCount;
+    private int $membersCount = 0;
+
+    private string $urlPath;
 
     private Collection $workers;
 
@@ -34,6 +36,18 @@ class Workspace
 
         $this->channels = new ArrayCollection();
         $this->workers = new ArrayCollection();
+    }
+
+    public function getUrlPath(): string
+    {
+        return $this->urlPath;
+    }
+
+    public function setUrlPath(string $urlPath): Workspace
+    {
+        $this->urlPath = $urlPath;
+
+        return $this;
     }
 
     public function getWorkers(): Collection

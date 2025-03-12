@@ -63,7 +63,7 @@ final class Version20250309104013 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_1065C4F382D40A1F ON workspaces_worker (workspace_id)');
         $this->addSql('CREATE INDEX IDX_1065C4F3A76ED395 ON workspaces_worker (user_id)');
         $this->addSql('CREATE INDEX IDX_1065C4F3D60322AC ON workspaces_worker (role_id)');
-        $this->addSql('CREATE TABLE workspaces_workspace (name VARCHAR(300) NOT NULL, members_count SMALLINT NOT NULL, created_at DATE NOT NULL, updated_at DATE DEFAULT NULL, id VARCHAR(26) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE workspaces_workspace (name VARCHAR(300) NOT NULL, members_count SMALLINT DEFAULT 0, created_at DATE NOT NULL, updated_at DATE DEFAULT NULL, id VARCHAR(26) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_A539351B5E237E06 ON workspaces_workspace (name)');
         $this->addSql('ALTER TABLE acl_plan_features ADD CONSTRAINT FK_E5A06A02E899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE acl_plan_roles ADD CONSTRAINT FK_B35CAA2EE899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) NOT DEFERRABLE INITIALLY IMMEDIATE');

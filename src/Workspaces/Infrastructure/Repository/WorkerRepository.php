@@ -11,8 +11,22 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class WorkerRepository extends ServiceEntityRepository implements WorkerRepositoryInterface
 {
+    private array $entities = [];
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Worker::class);
+    }
+
+    #[\Override] public function add(Worker $worker): string
+    {
+        if (!\array_key_exists($worker->getId(), $this->entities)) {
+            $this->getEntityManager()->persist($worker);
+            $this->getEntityManager()->flush();
+
+            $this->entities[$worker->getId()] = $worker;
+        }
+
+        return $worker->getId();
     }
 }

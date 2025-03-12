@@ -21,3 +21,7 @@ shared:
 channel:
   resource: ../src/Channels/Infrastructure/Controller/
   type: attribute
+
+workspace:
+  resource: ../src/Workspaces/Infrastructure/Controller/
+  type: attribute
