@@ -11,6 +11,7 @@
             <generator strategy="NONE"/>
         </id>
 
+        <field name="key" column="key" unique="true" length="50"/>
         <field name="name" column="name" unique="true"/>
 
         <field name="createdAt" column="created_at" type="date_immutable"/>

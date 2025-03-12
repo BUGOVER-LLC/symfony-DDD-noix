@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace App\Workspaces\Application\UseCase;
 
 use App\Shared\Application\Command\CommandBusInterface;
-use App\User\Application\UseCase\Command\CreateUser\CreateUserCommand;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
 
 class AdminUseCaseInteractor
 {
-
     public function __construct(private CommandBusInterface $commandBus)
     {
     }

@@ -15,4 +15,10 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
     {
         parent::__construct($registry, Role::class);
     }
+
+    #[\Override] public function add(Role $role)
+    {
+        $this->getEntityManager()->persist($role);
+        $this->getEntityManager()->flush();
+    }
 }
