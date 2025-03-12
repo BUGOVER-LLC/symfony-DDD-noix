@@ -7,7 +7,7 @@ namespace App\Workspaces\Application\UseCase;
 use App\Shared\Application\Command\CommandBusInterface;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
 
-class AdminUseCaseInteractor
+readonly class AdminUseCaseInteractor
 {
     public function __construct(private CommandBusInterface $commandBus)
     {
