@@ -9,4 +9,6 @@ use App\Acl\Domain\Entity\Role;
 interface RoleRepositoryInterface
 {
     public function add(Role $role);
+
+    public function findAllRoleByWorkspace(string $workspace): Role;
 }

@@ -21,4 +21,15 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
         $this->getEntityManager()->persist($role);
         $this->getEntityManager()->flush();
     }
+
+    #[\Override] public function findAllRoleByWorkspace(string $workspace): Role
+    {
+        $query = $this->createQueryBuilder('r');
+
+        return $query
+            ->leftJoin('', '')
+            ->setParameter('w', $workspace)
+            ->getQuery()
+            ->getResult();
+    }
 }
