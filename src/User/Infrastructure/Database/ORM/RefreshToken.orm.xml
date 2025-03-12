@@ -20,6 +20,6 @@
             </options>
         </field>
 
-        <field name="createdAt" type="date_immutable" column="created_at" nullable="false"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at" nullable="false"/>
     </entity>
 </doctrine-mapping>

@@ -21,8 +21,8 @@
         <field name="membersCount" column="members_count" type="smallint"/>
         <field name="urlPath" column="url_path" length="500" unique="true"/>
 
-        <field name="createdAt" column="created_at" type="date_immutable"/>
-        <field name="updatedAt" column="updated_at" type="date_immutable" nullable="true"/>
+        <field name="createdAt" column="created_at" type="datetime_immutable"/>
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
         </lifecycle-callbacks>

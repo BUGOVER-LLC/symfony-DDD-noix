@@ -17,8 +17,8 @@
         <one-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>
         <many-to-one field="workspace" target-entity="App\Workspaces\Domain\Entity\Workspace"/>
 
-        <field name="acceptedAt" column="accepted_at" type="date_immutable" nullable="true"/>
-        <field name="createdAt" column="created_at" type="date_immutable"/>
+        <field name="acceptedAt" column="accepted_at" type="datetime_immutable" nullable="true"/>
+        <field name="createdAt" column="created_at" type="datetime_immutable"/>
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
         </lifecycle-callbacks>

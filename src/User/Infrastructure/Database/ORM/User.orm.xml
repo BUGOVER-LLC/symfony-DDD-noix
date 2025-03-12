@@ -14,8 +14,8 @@
         <field name="email" length="191" unique="true"/>
         <field name="phone" length="19" nullable="true"/>
         <field name="password" length="255" nullable="true"/>
-        <field name="createdAt" column="created_at" type="date_immutable"/>
-        <field name="updatedAt" column="updated_at" type="date_immutable" nullable="true"/>
+        <field name="createdAt" column="created_at" type="datetime_immutable"/>
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
 
         <many-to-one field="currentWorkspace" target-entity="App\Workspaces\Domain\Entity\Workspace">
             <join-column name="current_workspace_id"/>
