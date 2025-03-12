@@ -7,6 +7,7 @@ namespace App\User\Domain\Entity;
 use App\Acl\Domain\Entity\Role;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Service\UlidService;
+use App\Workspaces\Domain\Entity\Workspace;
 use DateTimeImmutable;
 use Random\RandomException;
 
@@ -22,6 +23,8 @@ class UserInvitation
 
     private Role $role;
 
+    private Workspace $workspace;
+
     private ?DateTimeImmutable $acceptedAt = null;
 
     /**
@@ -31,6 +34,18 @@ class UserInvitation
     {
         $this->id = UlidService::generate();
         $this->token = random_bytes(191);
+    }
+
+    public function getWorkspace(): Workspace
+    {
+        return $this->workspace;
+    }
+
+    public function setWorkspace(Workspace $workspace): UserInvitation
+    {
+        $this->workspace = $workspace;
+
+        return $this;
     }
 
     public function getRole(): Role
