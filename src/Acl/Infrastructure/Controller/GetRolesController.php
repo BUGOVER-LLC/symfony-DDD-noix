@@ -6,7 +6,6 @@ namespace App\Acl\Infrastructure\Controller;
 
 use App\Acl\Application\UseCase\Query\FindRoles\FindAllRoleByWorkspaceQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 

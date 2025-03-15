@@ -34,6 +34,7 @@ RUN apk update \
         libc-dev \
         libpq-dev \
         libxml2-dev \
+        librdkafka-dev \
         bash
 
 # Install Composer
@@ -58,7 +59,11 @@ RUN pecl channel-update pecl.php.net && pecl install -o -f \
     redis \
     yaml \
     igbinary \
-    mongodb
+    mongodb \
+    event \
+    rdkafka
+
+RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/rdkafka.ini && echo "extension=event.so" >/usr/local/etc/php/conf.d/event.ini
 
 # Xdebug
 ARG ENABLE_XDEBUG=false
