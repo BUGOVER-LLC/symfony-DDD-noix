@@ -6,7 +6,7 @@ xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]
 # X-Pack security credentials
 xpack.monitoring.enabled: true
 
-#queue:
+# queue:
 #  type: persisted
 #  max_events: 1024
 #  max_bytes: 256mb

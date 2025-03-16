@@ -123,7 +123,7 @@ services:
     container_name: filebeats_cont
     build: ./filebeats
     volumes:
-      - ./../var/log:/var/log/symfony
+      - ../var/log:/var/log/symfony
     depends_on:
       - logstash_cont
 

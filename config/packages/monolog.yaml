@@ -1,26 +1,28 @@
 monolog:
   channels:
-    - deprecation
-    - nested
+    - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+    - app # Deprecations are logged in the dedicated "deprecation" channel when it exists
 
 when@dev:
   monolog:
     handlers:
       main:
-        type: fingers_crossed
-        action_level: error
-        handler: nested
-        excluded_http_codes: [ 404, 405 ]
-        buffer_size: 50
-      nested:
         type: stream
-        path: php://stderr
+        path: "%kernel.logs_dir%/%kernel.environment%.log"
         level: debug
+        channels: [ "!event" ]
         formatter: monolog.formatter.json
       console:
         type: console
         process_psr_3_messages: false
-        channels: [ "!event", "!doctrine", "!console" ]
+        channels: [ "!event", "!doctrine" ]
+      app:
+        type: stream
+        path: "%kernel.logs_dir%/app-%kernel.environment%.log"
+        level: debug
+        channels: [ "app" ]
+        formatter: monolog.formatter.json
+        process_psr_3_messages: false
 
 when@test:
   monolog:
