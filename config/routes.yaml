@@ -10,12 +10,12 @@ api_login_check:
   path: /api/auth/v1/token
 
 ### Domains controller
-user:
-  resource: ../src/User/Infrastructure/Controller/
-  type: attribute
-
 shared:
   resource: ../src/Shared/Infrastructure/Controller/
+  type: attribute
+
+user:
+  resource: ../src/User/Infrastructure/Controller/
   type: attribute
 
 channel:
