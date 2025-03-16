@@ -25,3 +25,7 @@ channel:
 workspace:
   resource: ../src/Workspaces/Infrastructure/Controller/
   type: attribute
+
+acl:
+  resource: ../src/Acl/Infrastructure/Controller/
+  type: attribute
