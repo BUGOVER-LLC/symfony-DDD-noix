@@ -17,7 +17,12 @@
             mapped-by="channels"
         />
 
-        <field name="name" column="name" type="string" length="300" unique="true"/>
+        <many-to-one
+            field="plan"
+            target-entity="App\Acl\Domain\Entity\Plan"
+        />
+
+        <field name="name" column="name" length="300" unique="true"/>
         <field name="membersCount" column="members_count" type="smallint"/>
         <field name="urlPath" column="url_path" length="500" unique="true"/>
 

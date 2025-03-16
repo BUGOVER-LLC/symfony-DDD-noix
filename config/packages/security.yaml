@@ -55,7 +55,7 @@ security:
   access_control:
     - { path: ^/api/auth/v1/token, roles: PUBLIC_ACCESS }
     - { path: ^/api/auth/v1/refresh-token, roles: PUBLIC_ACCESS }
-    - { path: ^/api/v1/(.*)/private, roles: [ IS_AUTHENTICATED_FULLY, ROLE_WORKSPACE_OWNER, WORKSPACE_ADMIN ] }
+    - { path: ^/api/v1/(.*)/, roles: [ IS_AUTHENTICATED_FULLY, ROLE_WORKSPACE_OWNER, WORKSPACE_ADMIN ] }
     - { path: ^/api/v1/app/, roles: [ ROLE_WORKSPACE_FULL_MEMBER, ROLE_WORKSPACE_MEMBER ] }
 
   role_hierarchy:

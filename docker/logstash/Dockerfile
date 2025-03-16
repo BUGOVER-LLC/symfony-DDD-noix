@@ -1,7 +1,5 @@
-ARG ELASTIC_VERSION
+FROM docker.elastic.co/logstash/logstash:8.17.3
+#COPY ./logstash.yml /usr/share/logstash/config/logstash.yml
+COPY ./logstash.conf /usr/share/logstash/pipeline/logstash.conf
 
-# https://www.docker.elastic.co/
-FROM docker.elastic.co/logstash/logstash:${ELASTIC_VERSION:-8.17.1}
 
-# Add your logstash plugins setup here
-# Example: RUN logstash-plugin install logstash-filter-json

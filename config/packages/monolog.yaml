@@ -16,7 +16,7 @@ when@dev:
         type: stream
         path: "%kernel.logs_dir%/parser-%kernel.environment%.log"
         level: debug
-        process_psr_3_messages: true #Context data in the message body
+        process_psr_3_messages: false
         channels: [ "warning" ]
         max_files: 10
         formatter: monolog.formatter.logstash
