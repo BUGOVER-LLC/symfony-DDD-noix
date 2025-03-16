@@ -123,12 +123,12 @@ services:
     container_name: filebeats_cont
     build: ./filebeats
     volumes:
-      - ./var/log:/var/log/symfony
+      - ./../var/log:/var/log/symfony
     depends_on:
       - logstash_cont
 
   kibana_cont:
-    image: docker.elastic.co/kibana/kibana:8.17.0
+    image: docker.elastic.co/kibana/kibana:7.17.0
     container_name: kibana_cont
     ports:
       - 5602:5601

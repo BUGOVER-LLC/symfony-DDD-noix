@@ -2,10 +2,13 @@ filebeat.inputs:
   - type: log
     paths:
       - /var/log/dev.log
+  - type: log
+    paths:
+      - /var/log/handling.log
 
 output.logstash:
   hosts: ["logstash_cont:5044"]
-  index: "logs-symfony"
+  index: "log-app"
 
 #setup.ilm.enabled: false
 #setup.template.overwrite: true
