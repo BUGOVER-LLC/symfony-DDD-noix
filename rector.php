@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-use Rector\Config\RectorConfig;
-use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector;
-
-return RectorConfig::configure()
+return Rector\Config\RectorConfig::configure()
     ->withRules(rules: [
-        TypedPropertyFromStrictConstructorRector::class,
+        Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector::class,
     ])
     ->withPaths([
         __DIR__ . '/src',
