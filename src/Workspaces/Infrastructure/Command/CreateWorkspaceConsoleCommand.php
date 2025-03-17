@@ -17,7 +17,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'create:workspace')]
 class CreateWorkspaceConsoleCommand extends Command
 {
-    public function __construct(private readonly AdminUseCaseInteractor $adminUseCaseInteractor)
+    public function __construct(
+        private readonly AdminUseCaseInteractor $adminUseCaseInteractor,
+    )
     {
         parent::__construct();
     }
@@ -38,7 +40,7 @@ class CreateWorkspaceConsoleCommand extends Command
             Assert::assertIsString($input);
 
             if (!filter_var($input, FILTER_VALIDATE_URL)) {
-                throw new RuntimeException('Invalid url');
+                throw new RuntimeException('Invalid URL');
             }
 
             return $input;

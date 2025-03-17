@@ -13,4 +13,9 @@ interface PlanRepositoryInterface
      * @return void
      */
     public function add(Plan $plan): void;
+
+    /**
+     * @return array<Plan>
+     */
+    public function findAll(): array;
 }
