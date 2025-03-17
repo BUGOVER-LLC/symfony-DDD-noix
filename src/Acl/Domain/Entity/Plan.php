@@ -45,7 +45,10 @@ class Plan
 
     public function setPlanFeatures(PlanFeature $planFeature): Plan
     {
-        $this->planFeatures->add($planFeature);
+        if (!$this->planFeatures->contains($planFeature)) {
+            $this->planFeatures->add($planFeature);
+            $planFeature->setPlan($this);
+        }
 
         return $this;
     }

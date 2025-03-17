@@ -15,7 +15,9 @@
             field="plan"
             target-entity="App\Acl\Domain\Entity\Plan"
             inversed-by="planFeatures"
-        />
+        >
+            <join-column name="plan_id" on-delete="CASCADE"/>
+        </many-to-one>
 
         <field name="name" column="name" unique="true"/>
         <field name="description" column="description" nullable="true"/>

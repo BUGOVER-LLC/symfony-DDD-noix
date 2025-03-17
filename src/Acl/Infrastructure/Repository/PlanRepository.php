@@ -15,4 +15,10 @@ class PlanRepository extends ServiceEntityRepository implements PlanRepositoryIn
     {
         parent::__construct($registry, Plan::class);
     }
+
+    #[\Override] public function add(Plan $plan): void
+    {
+        $this->getEntityManager()->persist($plan);
+        $this->getEntityManager()->flush();
+    }
 }
