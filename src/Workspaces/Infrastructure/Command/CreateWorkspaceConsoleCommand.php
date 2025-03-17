@@ -44,6 +44,10 @@ class CreateWorkspaceConsoleCommand extends Command
         $plans = $this->queryInteractor->findAllPlanQuery(new FindAllPlanQuery());
         $choisedPlan = $this->choiseFindPlan($io, $plans);
 
+        if (!$choisedPlan) {
+            throw new RuntimeException('None correct plan');
+        }
+
         $workspacePath = $io->ask('Workspace path', '', function (?string $input) {
             Assert::assertIsString($input);
 
@@ -60,7 +64,7 @@ class CreateWorkspaceConsoleCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function choiseFindPlan(SymfonyStyle $io, array $plans)
+    private function choiseFindPlan(SymfonyStyle $io, array $plans): ?Plan
     {
         $choisedPlanName = $io->choice(
             'Choise plan for your Workspace',
@@ -68,7 +72,7 @@ class CreateWorkspaceConsoleCommand extends Command
         );
 
         if (!$choisedPlanName) {
-            throw new RuntimeException();
+            throw new RuntimeException('Invalid data');
         }
 
         foreach ($plans as $plan) {
@@ -78,6 +82,6 @@ class CreateWorkspaceConsoleCommand extends Command
             }
         }
 
-        return $choisedPlan;
+        return $choisedPlan ?? null;
     }
 }
