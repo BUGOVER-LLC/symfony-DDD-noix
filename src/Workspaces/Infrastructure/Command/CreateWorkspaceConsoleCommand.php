@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Workspaces\Infrastructure\Command;
 
+use App\Acl\Application\QueryInteractor;
+use App\Acl\Application\UseCase\Query\FindPlans\FindAllPlanQuery;
+use App\Acl\Domain\Entity\Plan;
 use App\Workspaces\Application\UseCase\AdminUseCaseInteractor;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
 use PHPUnit\Framework\Assert;
@@ -19,6 +22,7 @@ class CreateWorkspaceConsoleCommand extends Command
 {
     public function __construct(
         private readonly AdminUseCaseInteractor $adminUseCaseInteractor,
+        private readonly QueryInteractor $queryInteractor
     )
     {
         parent::__construct();
@@ -36,6 +40,10 @@ class CreateWorkspaceConsoleCommand extends Command
             }
         });
 
+        /* @var Plan[] $plans */
+        $plans = $this->queryInteractor->findAllPlanQuery(new FindAllPlanQuery());
+        $choisedPlan = $this->choiseFindPlan($io, $plans);
+
         $workspacePath = $io->ask('Workspace path', '', function (?string $input) {
             Assert::assertIsString($input);
 
@@ -46,9 +54,30 @@ class CreateWorkspaceConsoleCommand extends Command
             return $input;
         });
 
-        $command = new CreateWorkspaceCommand($workspaceName, $workspacePath);
+        $command = new CreateWorkspaceCommand($workspaceName, $workspacePath, $choisedPlan);
         $this->adminUseCaseInteractor->createWorkspace($command);
 
         return Command::SUCCESS;
+    }
+
+    private function choiseFindPlan(SymfonyStyle $io, array $plans)
+    {
+        $choisedPlanName = $io->choice(
+            'Choise plan for your Workspace',
+            array_map(static fn(Plan $item) => $item->getName(), $plans)
+        );
+
+        if (!$choisedPlanName) {
+            throw new RuntimeException();
+        }
+
+        foreach ($plans as $plan) {
+            if ($plan->getName() === $choisedPlanName) {
+                $choisedPlan = $plan;
+                break;
+            }
+        }
+
+        return $choisedPlan;
     }
 }

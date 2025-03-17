@@ -19,7 +19,11 @@ readonly class CreateWorkspaceCommandHandler implements CommandHandlerInterface
 
     public function __invoke(CreateWorkspaceCommand $workspaceCommand): string
     {
-        $workspace = $this->workspaceFactory->create($workspaceCommand->name, $workspaceCommand->urlPath);
+        $workspace = $this->workspaceFactory->create(
+            $workspaceCommand->name,
+            $workspaceCommand->urlPath,
+            $workspaceCommand->plan,
+        );
         $this->workspaceRepository->add($workspace);
 
         return $workspace->getId();

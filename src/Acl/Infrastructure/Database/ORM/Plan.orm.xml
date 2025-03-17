@@ -11,7 +11,7 @@
             <generator strategy="NONE"/>
         </id>
 
-        <field name="name" column="name"/>
+        <field name="name" column="name" unique="true"/>
         <field name="description" column="description" nullable="true"/>
         <field name="price" column="price" type="decimal" precision="8" scale="2"/>
         <field name="trial" column="trial" type="boolean"/>

@@ -10,5 +10,6 @@ readonly class FindAllPlanQuery extends Query
 {
     public function __construct()
     {
+        //
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Acl\Application\UseCase\Query\FindPlans;
 
+use App\Acl\Domain\Entity\Plan;
 use App\Acl\Domain\Repository\PlanRepositoryInterface;
 use App\Shared\Application\Query\QueryHandlerInterface;
 
@@ -15,7 +16,7 @@ readonly class FindAallPlanQueryHandler implements QueryHandlerInterface
 
     /**
      * @param FindAllPlanQuery $planQuery
-     * @return array
+     * @return array<Plan>
      */
     public function __invoke(FindAllPlanQuery $planQuery): array
     {
