@@ -20,9 +20,11 @@ class WorkerRepository extends ServiceEntityRepository implements WorkerReposito
 
     #[\Override] public function add(Worker $worker): string
     {
+        $manager = $this->getEntityManager();
+
         if (!\array_key_exists($worker->getId(), $this->entities)) {
-            $this->getEntityManager()->persist($worker);
-            $this->getEntityManager()->flush();
+            $manager->persist($worker);
+            $manager->flush();
 
             $this->entities[$worker->getId()] = $worker;
         }

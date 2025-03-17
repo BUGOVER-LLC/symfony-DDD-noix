@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRepositoryInterface
 {
+    private array $entities = [];
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Workspace::class);
@@ -18,12 +20,34 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
 
     #[\Override] public function add(Workspace $workspace): void
     {
-        $this->getEntityManager()->persist($workspace);
-        $this->getEntityManager()->flush();
+        $manager = $this->getEntityManager();
+
+        if (!\array_key_exists($workspace->getId(), $this->entities)) {
+            $manager->persist($workspace);
+            $manager->flush();
+
+            $this->entities[$workspace->getId()] = $workspace;
+        }
     }
 
-    #[\Override] public function findAllWorkspacesByUserId(int $userId): array
+    #[\Override] public function delete(Workspace $workspace): void
     {
-        // TODO: Implement findAllWorkspacesByUserId() method.
+        $manager = $this->getEntityManager();
+
+        $manager->remove($workspace);
+        $manager->flush();
+
+        unset($this->entities[$workspace->getId()]);
+    }
+
+    #[\Override] public function findAllWorkspacesByUserId(int $userId): ?Workspace
+    {
+        return $this
+            ->createQueryBuilder('w')
+            ->select('*')
+            ->innerJoin('w.workers', 'workers', 'WITH', 'workers.user_id = :user_id')
+            ->setParameter('user_id', $userId)
+            ->getQuery()
+            ->getSingleResult();
     }
 }
