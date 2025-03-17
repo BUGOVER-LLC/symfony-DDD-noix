@@ -8,6 +8,8 @@ use App\Shared\Domain\Specification\SpecificationInterface;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PostLoadEventArgs;
 use Doctrine\ORM\Events;
+use ReflectionClass;
+use ReflectionNamedType;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 #[AsDoctrineListener(event: Events::postLoad)]
@@ -22,7 +24,7 @@ final readonly class InitSpecificationOnPostLoadListener
     {
         $entity = $args->getObject();
 
-        $reflect = new \ReflectionClass($entity);
+        $reflect = new ReflectionClass($entity);
 
         foreach ($reflect->getProperties() as $property) {
             $type = $property->getType();
@@ -31,7 +33,7 @@ final readonly class InitSpecificationOnPostLoadListener
                 continue;
             }
 
-            if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
+            if ($type instanceof ReflectionNamedType && !$type->isBuiltin()) {
                 // initialize specifications
                 $interfaces = class_implements($type->getName());
                 if (isset($interfaces[SpecificationInterface::class])) {
