@@ -9,6 +9,16 @@ filebeat.inputs:
       - /var/log/app-dev.log
     fields: {log_type: app-dev}
 
+  - type: log
+    paths:
+      - /var/log/activity-dev.log
+    fields: {log_type: app-dev}
+
+  - type: log
+    paths:
+      - /var/log/activity-prod.log
+    fields: {log_type: app-dev}
+
 output.logstash:
   hosts: ["logstash_cont:5044"]
   index: "log-app"

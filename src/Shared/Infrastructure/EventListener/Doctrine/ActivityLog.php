@@ -11,7 +11,7 @@ use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 
 #[WithMonologChannel(channel: 'activity')]
-class ActivityLog implements EventSubscriber
+final class ActivityLog implements EventSubscriber
 {
     public function __construct(private readonly LoggerInterface $logger)
     {

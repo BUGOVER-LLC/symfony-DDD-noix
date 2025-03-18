@@ -20,17 +20,18 @@ when@dev:
       app:
         type: stream
         path: "%kernel.logs_dir%/app-%kernel.environment%.log"
-        level: debug
+        level: notice
         channels: [ "app" ]
         formatter: monolog.formatter.json
         process_psr_3_messages: false
       activity:
         type: stream
         path: "%kernel.logs_dir%/activity-%kernel.environment%.log"
-        level: debug
+        level: info
         channels: [ "activity" ]
         formatter: monolog.formatter.json
         process_psr_3_messages: false
+        max_files: 14
 
 when@test:
   monolog:
@@ -69,3 +70,18 @@ when@prod:
         channels: [ deprecation ]
         path: php://stderr
         formatter: monolog.formatter.json
+      app:
+        type: stream
+        path: "%kernel.logs_dir%/app-%kernel.environment%.log"
+        level: notice
+        channels: [ "app" ]
+        formatter: monolog.formatter.json
+        process_psr_3_messages: false
+      activity:
+        type: stream
+        path: "%kernel.logs_dir%/activity-%kernel.environment%.log"
+        level: info
+        channels: [ "activity" ]
+        formatter: monolog.formatter.json
+        process_psr_3_messages: false
+        max_files: 14
