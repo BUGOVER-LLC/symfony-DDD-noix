@@ -10,7 +10,7 @@ use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Events;
 
 #[AsEntityListener(event: Events::postRemove, method: Events::postRemove, entity: Worker::class)]
-class WorkspaceWorkerDeleted
+final class WorkspaceWorkerDeleted
 {
     public function __construct()
     {

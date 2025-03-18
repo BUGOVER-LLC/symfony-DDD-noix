@@ -9,7 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 
 #[AsEntityListener(event: Events::postFlush, method: Events::postFlush, entity: Worker::class)]
-class WorkspaceWorkerCreated
+final class WorkspaceWorkerCreated
 {
     public function __construct()
     {
