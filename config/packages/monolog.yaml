@@ -2,6 +2,7 @@ monolog:
   channels:
     - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
     - app # Deprecations are logged in the dedicated "deprecation" channel when it exists
+    - activity # Deprecations are logged in the dedicated "deprecation" channel when it exists
 
 when@dev:
   monolog:
@@ -21,6 +22,13 @@ when@dev:
         path: "%kernel.logs_dir%/app-%kernel.environment%.log"
         level: debug
         channels: [ "app" ]
+        formatter: monolog.formatter.json
+        process_psr_3_messages: false
+      activity:
+        type: stream
+        path: "%kernel.logs_dir%/activity-%kernel.environment%.log"
+        level: debug
+        channels: [ "activity" ]
         formatter: monolog.formatter.json
         process_psr_3_messages: false
 
