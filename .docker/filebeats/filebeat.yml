@@ -1,23 +1,23 @@
 filebeat.inputs:
   - type: log
     paths:
-      - /var/log/dev.log
+      - /var/log/symfony/dev.log
     fields: {log_type: app}
 
   - type: log
     paths:
-      - /var/log/app-dev.log
+      - /var/log/symfony/app-dev.log
     fields: {log_type: app-dev}
 
-  - type: log
-    paths:
-      - /var/log/activity-dev.log
-    fields: {log_type: app-dev}
-
-  - type: log
-    paths:
-      - /var/log/activity-prod.log
-    fields: {log_type: app-dev}
+#   - type: log
+#     paths:
+#       - /var/log/activity-dev.log
+#     fields: {log_type: app-dev}
+#
+#   - type: log
+#     paths:
+#       - /var/log/activity-prod.log
+#     fields: {log_type: app-dev}
 
 output.logstash:
   hosts: ["logstash_cont:5044"]
