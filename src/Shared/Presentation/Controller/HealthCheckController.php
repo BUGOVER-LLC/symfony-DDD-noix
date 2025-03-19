@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Controller;
+namespace App\Shared\Presentation\Controller;
 
 use OpenApi\Attributes as OA;
 use stdClass;

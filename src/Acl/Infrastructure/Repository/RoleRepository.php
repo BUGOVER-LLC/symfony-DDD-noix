@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class RoleRepository extends ServiceEntityRepository implements RoleRepositoryInterface
 {
+    private array $entities;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Role::class);
@@ -20,6 +22,7 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
     {
         $this->getEntityManager()->persist($role);
         $this->getEntityManager()->flush();
+        $this->entities[$role->getId()] = $role;
     }
 
     #[\Override] public function findAllRoleByWorkspace(string $workspace): Role

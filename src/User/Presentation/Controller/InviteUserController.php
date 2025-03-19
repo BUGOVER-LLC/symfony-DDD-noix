@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\Controller;
+namespace App\User\Presentation\Controller;
 
 use App\Shared\Infrastructure\Attribute\RequestBody;
 use App\User\Infrastructure\DTO\InviteUserDTO;
