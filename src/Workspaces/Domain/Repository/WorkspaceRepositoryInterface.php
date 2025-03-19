@@ -10,5 +10,9 @@ interface WorkspaceRepositoryInterface
 {
     public function add(Workspace $workspace): void;
 
-    public function findAllWorkspacesByUserId(int $userId): array;
+    public function delete(Workspace $workspace): void;
+
+    public function findAllWorkspacesByUserId(int $userId): ?Workspace;
+
+    public function incrementWorkerCount(Workspace $workspace): void;
 }

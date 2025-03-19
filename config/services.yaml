@@ -41,31 +41,35 @@ services:
       public: true
 
   # Domains controllers
-  App\Shared\Infrastructure\Controller\:
-    resource: ../src/Shared/Infrastructure/Controller/
+  App\Shared\Presentation\Controller\:
+    resource: ../src/Shared/Presentation/Controller/
     tags: [ 'controller.service_arguments' ]
 
-  App\User\Infrastructure\Controller\:
-    resource: ../src/User/Infrastructure/Controller/
+  App\User\Presentation\Controller\:
+    resource: ../src/User/Presentation/Controller/
     tags: [ 'controller.service_arguments' ]
 
-  App\Channels\Infrastructure\Controller\:
-    resource: ../src/Channels/Infrastructure/Controller/
+  App\Channels\Presentation\Controller\:
+    resource: ../src/Channels/Presentation/Controller/
     tags: [ 'controller.service_arguments' ]
 
-  App\Workspaces\Infrastructure\Controller\:
-    resource: ../src/Workspaces/Infrastructure/Controller/
+  App\Workspaces\Presentation\Controller\:
+    resource: ../src/Workspaces/Presentation/Controller/
     tags: [ 'controller.service_arguments' ]
 
-  App\Acl\Infrastructure\Controller\:
-    resource: ../src/Acl/Infrastructure/Controller/
+  App\Acl\Presentation\Controller\:
+    resource: ../src/Acl/Presentation/Controller/
     tags: [ 'controller.service_arguments' ]
 
-  # add more service definitions when explicit configuration is needed
-  # please note that last definitions always *replace* previous ones
-
+  # Listeners
   acme_api.event.jwt_created_listener:
     class: App\User\Infrastructure\EventHandler\JWTCreatedEventHandler
     arguments: [ '@request_stack' ]
     tags:
       - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+  App\Shared\Infrastructure\EventListener\Doctrine\ActivityLog:
+    arguments:
+      $logger: '@logger'
+    tags:
+      - { name: doctrine.event_subscriber }

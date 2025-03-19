@@ -22,6 +22,11 @@ parameters:
         - type: directory
           value: /src/\w+/Infrastructure/.*
 
+    - name: Presentation
+      collectors:
+        - type: directory
+          value: /src/\w+/Presentation/.*
+
   ruleset:
     Domain:
     Application:
@@ -29,3 +34,7 @@ parameters:
     Infrastructure:
       - Domain
       - Application
+    Presentation:
+      - Domain
+      - Application
+      - Infrastructure

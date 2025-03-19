@@ -9,4 +9,6 @@ use App\Workspaces\Domain\Entity\Worker;
 interface WorkerRepositoryInterface
 {
     public function add(Worker $worker): string;
+
+    public function workersCountByWorkspace(string $workspaceId): int;
 }

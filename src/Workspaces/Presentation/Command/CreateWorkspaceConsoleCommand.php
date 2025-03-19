@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Workspaces\Infrastructure\Command;
+namespace App\Workspaces\Presentation\Command;
 
-use App\Acl\Application\QueryInteractor;
-use App\Acl\Application\UseCase\Query\FindPlans\FindAllPlanQuery;
 use App\Acl\Domain\Entity\Plan;
 use App\Workspaces\Application\UseCase\AdminUseCaseInteractor;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
+use App\Workspaces\Infrastructure\Adapter\AclAdapterInterface;
 use PHPUnit\Framework\Assert;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -22,7 +21,7 @@ class CreateWorkspaceConsoleCommand extends Command
 {
     public function __construct(
         private readonly AdminUseCaseInteractor $adminUseCaseInteractor,
-        private readonly QueryInteractor $queryInteractor
+        private readonly AclAdapterInterface $aclAdapter,
     )
     {
         parent::__construct();
@@ -33,26 +32,23 @@ class CreateWorkspaceConsoleCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $workspaceName = $io->ask('Workspace name', '', function (?string $input) {
-            if ($input) {
-                Assert::assertIsString($input);
+            Assert::assertNotNull($input);
+            Assert::assertIsString($input);
 
-                return $input;
-            }
+            return $input;
         });
 
         /* @var Plan[] $plans */
-        $plans = $this->queryInteractor->findAllPlanQuery(new FindAllPlanQuery());
+        $plans = $this->aclAdapter->getPlans();
         $choisedPlan = $this->choiseFindPlan($io, $plans);
 
-        if (!$choisedPlan) {
-            throw new RuntimeException('None correct plan');
-        }
+        Assert::assertInstanceOf(Plan::class, $choisedPlan, 'None correct plan');
 
         $workspacePath = $io->ask('Workspace path', '', function (?string $input) {
             Assert::assertIsString($input);
 
             if (!filter_var($input, FILTER_VALIDATE_URL)) {
-                throw new RuntimeException('Invalid URL');
+                throw new RuntimeException('Invalid URL', 400);
             }
 
             return $input;
@@ -64,16 +60,19 @@ class CreateWorkspaceConsoleCommand extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @param SymfonyStyle $io
+     * @param Plan[] $plans
+     * @return Plan|null
+     */
     private function choiseFindPlan(SymfonyStyle $io, array $plans): ?Plan
     {
         $choisedPlanName = $io->choice(
-            'Choise plan for your Workspace',
+            'Choose a plan for your Workspace',
             array_map(static fn(Plan $item) => $item->getName(), $plans)
         );
 
-        if (!$choisedPlanName) {
-            throw new RuntimeException('Invalid data');
-        }
+        Assert::assertIsString($choisedPlanName, 'Invalid data');
 
         foreach ($plans as $plan) {
             if ($plan->getName() === $choisedPlanName) {

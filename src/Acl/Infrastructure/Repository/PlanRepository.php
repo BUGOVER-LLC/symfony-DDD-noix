@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class PlanRepository extends ServiceEntityRepository implements PlanRepositoryInterface
 {
+    private array $entities;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Plan::class);
@@ -20,5 +22,6 @@ class PlanRepository extends ServiceEntityRepository implements PlanRepositoryIn
     {
         $this->getEntityManager()->persist($plan);
         $this->getEntityManager()->flush();
+        $this->entities[$plan->getId()] = $plan;
     }
 }

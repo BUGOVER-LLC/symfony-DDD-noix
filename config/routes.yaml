@@ -11,21 +11,21 @@ api_login_check:
 
 ### Domains controller
 shared:
-  resource: ../src/Shared/Infrastructure/Controller/
+  resource: ../src/Shared/Presentation/Controller/
   type: attribute
 
 user:
-  resource: ../src/User/Infrastructure/Controller/
+  resource: ../src/User/Presentation/Controller/
   type: attribute
 
 channel:
-  resource: ../src/Channels/Infrastructure/Controller/
+  resource: ../src/Channels/Presentation/Controller/
   type: attribute
 
 workspace:
-  resource: ../src/Workspaces/Infrastructure/Controller/
+  resource: ../src/Workspaces/Presentation/Controller/
   type: attribute
 
 acl:
-  resource: ../src/Acl/Infrastructure/Controller/
+  resource: ../src/Acl/Presentation/Controller/
   type: attribute

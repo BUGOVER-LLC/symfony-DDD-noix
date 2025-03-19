@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\Command;
+namespace App\User\Presentation\Command;
 
 use App\Shared\Domain\Security\Role;
 use App\User\Application\UseCase\AdminUseCaseInteractor;

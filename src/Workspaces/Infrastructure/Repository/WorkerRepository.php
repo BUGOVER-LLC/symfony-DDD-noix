@@ -20,13 +20,24 @@ class WorkerRepository extends ServiceEntityRepository implements WorkerReposito
 
     #[\Override] public function add(Worker $worker): string
     {
+        $manager = $this->getEntityManager();
+
         if (!\array_key_exists($worker->getId(), $this->entities)) {
-            $this->getEntityManager()->persist($worker);
-            $this->getEntityManager()->flush();
+            $manager->persist($worker);
+            $manager->flush();
 
             $this->entities[$worker->getId()] = $worker;
         }
 
         return $worker->getId();
+    }
+
+    #[\Override] public function workersCountByWorkspace(string $workspaceId): int
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->where('w.workspace = :workspace');
+        $qb->setParameter('workspace', $workspaceId);
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

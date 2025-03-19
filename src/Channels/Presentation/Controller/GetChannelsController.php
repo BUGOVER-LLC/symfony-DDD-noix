@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Channels\Infrastructure\Controller;
+namespace App\Channels\Presentation\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;

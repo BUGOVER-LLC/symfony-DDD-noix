@@ -77,7 +77,7 @@ RUN docker-php-ext-enable \
     mongodb \
     redis
 
-COPY ./docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY ./.docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 RUN docker-php-ext-enable redis
 

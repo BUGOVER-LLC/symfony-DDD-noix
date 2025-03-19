@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Workspaces\Infrastructure\Controller;
+namespace App\Workspaces\Presentation\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
+#[IsGranted(attribute: 'IS_AUTHENTICATED_FULLY', statusCode: 401)]
 #[Route(path: '/api/v1/workspaces', methods: ['GET'])]
 class GetWorkspacesController extends AbstractController
 {
