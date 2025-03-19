@@ -32,10 +32,9 @@ class User implements AuthUserInterface
 
     private ?Workspace $currentWorkspace;
 
-    public function __construct(string $email)
+    public function __construct()
     {
         $this->id = UlidService::generate();
-        $this->email = $email;
     }
 
     public function getCurrentWorkspace(): ?Workspace
