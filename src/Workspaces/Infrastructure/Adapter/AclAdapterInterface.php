@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Workspaces\Domain\Adapter;
+namespace App\Workspaces\Infrastructure\Adapter;
 
 interface AclAdapterInterface
 {
     public function getRoles(): array;
+
+    public function getPlans(): array;
 }

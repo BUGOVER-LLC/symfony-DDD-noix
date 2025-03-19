@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Workspaces\Presentation\Command;
 
-use App\Acl\Application\QueryInteractor;
-use App\Acl\Application\UseCase\Query\FindPlans\FindAllPlanQuery;
 use App\Acl\Domain\Entity\Plan;
 use App\Workspaces\Application\UseCase\AdminUseCaseInteractor;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
+use App\Workspaces\Infrastructure\Adapter\AclAdapterInterface;
 use PHPUnit\Framework\Assert;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -22,7 +21,7 @@ class CreateWorkspaceConsoleCommand extends Command
 {
     public function __construct(
         private readonly AdminUseCaseInteractor $adminUseCaseInteractor,
-        private readonly QueryInteractor $queryInteractor
+        private readonly AclAdapterInterface $aclAdapter,
     )
     {
         parent::__construct();
@@ -40,7 +39,7 @@ class CreateWorkspaceConsoleCommand extends Command
         });
 
         /* @var Plan[] $plans */
-        $plans = $this->queryInteractor->findAllPlanQuery(new FindAllPlanQuery());
+        $plans = $this->aclAdapter->getPlans();
         $choisedPlan = $this->choiseFindPlan($io, $plans);
 
         Assert::assertInstanceOf(Plan::class, $choisedPlan, 'None correct plan');
