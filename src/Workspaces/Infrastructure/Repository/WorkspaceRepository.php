@@ -50,4 +50,14 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
             ->getQuery()
             ->getSingleResult();
     }
+
+    #[\Override] public function incrementWorkerCount(Workspace $workspace): void
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->where('w.id = :workspaceId');
+        $qb->update();
+        $qb->set('w.membersCount', 'w.membersCount + 1');
+        $qb->setParameter('workspaceId', $workspace->getId());
+        $qb->getQuery()->execute();
+    }
 }

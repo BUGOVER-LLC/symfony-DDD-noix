@@ -31,4 +31,13 @@ class WorkerRepository extends ServiceEntityRepository implements WorkerReposito
 
         return $worker->getId();
     }
+
+    #[\Override] public function workersCountByWorkspace(string $workspaceId): int
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->where('w.workspace = :workspace');
+        $qb->setParameter('workspace', $workspaceId);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
