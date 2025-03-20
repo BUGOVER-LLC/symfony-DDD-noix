@@ -95,7 +95,9 @@ class User implements AuthUserInterface
 
     #[Override] public function getRoles(): array
     {
-        return [];
+        return [
+            'WORKSPACE_FULL_MEMBER'
+        ];
     }
 
     #[Override] public function eraseCredentials(): void
