@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Workspaces\Presentation\Command;
 
+use App\Acl\Application\DTO\PlanDTO;
 use App\Acl\Domain\Entity\Plan;
 use App\Workspaces\Application\UseCase\AdminUseCaseInteractor;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
@@ -42,7 +43,7 @@ class CreateWorkspaceConsoleCommand extends Command
         $plans = $this->aclAdapter->getPlans();
         $choisedPlan = $this->choiseFindPlan($io, $plans);
 
-        Assert::assertInstanceOf(Plan::class, $choisedPlan, 'None correct plan');
+        Assert::assertInstanceOf(PlanDTO::class, $choisedPlan, 'None correct plan');
 
         $workspacePath = $io->ask('Workspace path', '', function (?string $input) {
             Assert::assertIsString($input);
@@ -62,20 +63,20 @@ class CreateWorkspaceConsoleCommand extends Command
 
     /**
      * @param SymfonyStyle $io
-     * @param Plan[] $plans
-     * @return Plan|null
+     * @param PlanDTO[] $plans
+     * @return PlanDTO
      */
-    private function choiseFindPlan(SymfonyStyle $io, array $plans): ?Plan
+    private function choiseFindPlan(SymfonyStyle $io, array $plans): ?PlanDTO
     {
         $choisedPlanName = $io->choice(
             'Choose a plan for your Workspace',
-            array_map(static fn(Plan $item) => $item->getName(), $plans)
+            array_map(static fn(PlanDTO $item) => $item->name, $plans)
         );
 
         Assert::assertIsString($choisedPlanName, 'Invalid data');
 
         foreach ($plans as $plan) {
-            if ($plan->getName() === $choisedPlanName) {
+            if ($plan->name === $choisedPlanName) {
                 $choisedPlan = $plan;
                 break;
             }

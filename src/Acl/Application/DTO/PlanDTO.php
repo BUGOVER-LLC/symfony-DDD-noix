@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Acl\Application\DTO;
 
+use App\Acl\Domain\Entity\Plan;
 use OpenApi\Attributes\Items;
 use OpenApi\Attributes\Schema;
 
@@ -19,5 +20,21 @@ readonly class PlanDTO
         public bool $active,
     )
     {
+    }
+
+    /**
+     * @param Plan $plan
+     * @return PlanDTO
+     */
+    public static function formEntity(Plan $plan): PlanDTO
+    {
+        return new PlanDTO(
+            id: $plan->getId(),
+            name: $plan->getName(),
+            description: $plan->getDescription(),
+            price: $plan->getPrice(),
+            trial: $plan->isTrial(),
+            active: $plan->isActive(),
+        );
     }
 }

@@ -32,6 +32,7 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
 
         return $query
             ->innerJoin(Workspace::class, 'w', 'WITH', 'w.id = :workspace')
+            ->where('w.id = :workspace')
             ->setParameter('workspace', $workspace)
             ->getQuery()
             ->getResult();
