@@ -16,7 +16,3 @@ services:
 
   App\Shared\Infrastructure\Bus\EventBus:
     public: true
-
-  App\Skills\Domain\Factory\:
-    resource: '../src/Skills/Domain/Factory'
-    public: true

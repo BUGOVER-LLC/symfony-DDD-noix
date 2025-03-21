@@ -35,6 +35,5 @@ parameters:
       - Domain
       - Application
     Presentation:
-      - Domain
       - Application
       - Infrastructure
