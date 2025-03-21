@@ -64,7 +64,7 @@ services:
   # Listeners
   acme_api.event.jwt_created_listener:
     class: App\User\Infrastructure\EventHandler\JWTCreatedEventHandler
-    arguments: [ '@request_stack' ]
+#    arguments: [ '@security.se' ]
     tags:
       - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 

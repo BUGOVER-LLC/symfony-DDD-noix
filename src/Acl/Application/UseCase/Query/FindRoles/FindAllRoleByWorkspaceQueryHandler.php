@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Acl\Application\UseCase\Query\FindRoles;
 
 use App\Acl\Application\DTO\RoleDTO;
+use App\Acl\Domain\Entity\Role;
 use App\Acl\Domain\Repository\RoleRepositoryInterface;
 use App\Shared\Application\Query\QueryHandlerInterface;
 
@@ -14,10 +15,17 @@ readonly class FindAllRoleByWorkspaceQueryHandler implements QueryHandlerInterfa
     {
     }
 
-    public function __invoke(FindAllRoleByWorkspaceQuery $query): RoleDTO
+    /**
+     * @param FindAllRoleByWorkspaceQuery $query
+     * @return array<RoleDTO>
+     */
+    public function __invoke(FindAllRoleByWorkspaceQuery $query): array
     {
-        $role = $this->roleRepository->findAllRoleByWorkspace($query->workspace);
+        $roles = $this->roleRepository->findAllRoleByWorkspace($query->workspace);
 
-        return new RoleDTO($role->getId(), $role->getName(), $role->getKey());
+        return array_map(
+            callback: static fn(Role $role) => RoleDTO::fromEntity($role),
+            array: $roles
+        );
     }
 }

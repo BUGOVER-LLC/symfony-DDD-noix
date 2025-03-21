@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\Voter;
+namespace App\User\Infrastructure\Security;
 
 use App\Acl\Domain\Security\CanCheckHasInvitingUser;
 use App\User\Domain\Entity\User;
