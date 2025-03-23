@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\User\Presentation\Controller;
 
-use App\Shared\Infrastructure\Attribute\RequestBody;
 use App\User\Infrastructure\DTO\InviteUserDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -24,7 +24,7 @@ class InviteUserController extends AbstractController
 
     public function __invoke(
         Request $request,
-        #[RequestBody] InviteUserDTO $inviteUser,
+        #[MapRequestPayload] InviteUserDTO $inviteUser,
     ): JsonResponse
     {
         return $this->json(['message' => $this->translator->trans('invitation')]);
