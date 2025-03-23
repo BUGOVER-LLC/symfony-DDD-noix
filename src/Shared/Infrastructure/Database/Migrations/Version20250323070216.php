@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250321214824 extends AbstractMigration
+final class Version20250323070216 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -74,7 +74,7 @@ final class Version20250321214824 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_A539351B5E237E06 ON workspaces_workspace (name)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_A539351B150042B7 ON workspaces_workspace (url_path)');
         $this->addSql('CREATE INDEX IDX_A539351BE899029B ON workspaces_workspace (plan_id)');
-        $this->addSql('CREATE TABLE workspaces_workspace_role (workspace_id VARCHAR(26) NOT NULL, role_id VARCHAR(26) NOT NULL, PRIMARY KEY(workspace_id, role_id))');
+        $this->addSql('CREATE TABLE workspaces_workspace_role (created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(26) NOT NULL, workspace_id VARCHAR(26) DEFAULT NULL, role_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_2243C2C282D40A1F ON workspaces_workspace_role (workspace_id)');
         $this->addSql('CREATE INDEX IDX_2243C2C2D60322AC ON workspaces_workspace_role (role_id)');
         $this->addSql('ALTER TABLE acl_plan_features ADD CONSTRAINT FK_E5A06A02E899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -102,8 +102,8 @@ final class Version20250321214824 extends AbstractMigration
         $this->addSql('ALTER TABLE workspaces_worker ADD CONSTRAINT FK_1065C4F3A76ED395 FOREIGN KEY (user_id) REFERENCES users_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE workspaces_worker ADD CONSTRAINT FK_1065C4F3D60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE workspaces_workspace ADD CONSTRAINT FK_A539351BE899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE workspaces_workspace_role ADD CONSTRAINT FK_2243C2C282D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE workspaces_workspace_role ADD CONSTRAINT FK_2243C2C2D60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE workspaces_workspace_role ADD CONSTRAINT FK_2243C2C282D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE workspaces_workspace_role ADD CONSTRAINT FK_2243C2C2D60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     public function down(Schema $schema): void

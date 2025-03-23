@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Workspaces\Presentation\Command;
 
 use App\Acl\Application\DTO\PlanDTO;
-use App\Acl\Domain\Entity\Plan;
 use App\Workspaces\Application\UseCase\AdminUseCaseInteractor;
 use App\Workspaces\Application\UseCase\Command\CreateWorkspace\CreateWorkspaceCommand;
 use App\Workspaces\Infrastructure\Adapter\AclAdapterInterface;
@@ -39,7 +38,7 @@ class CreateWorkspaceConsoleCommand extends Command
             return $input;
         });
 
-        /* @var Plan[] $plans */
+        /* @var PlanDTO[] $plans */
         $plans = $this->aclAdapter->getPlans();
         $choisedPlan = $this->choiseFindPlan($io, $plans);
 
