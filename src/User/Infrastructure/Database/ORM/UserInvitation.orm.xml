@@ -16,6 +16,7 @@
 
         <one-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>
         <many-to-one field="workspace" target-entity="App\Workspaces\Domain\Entity\Workspace"/>
+        <many-to-one field="channel" target-entity="App\Channels\Domain\Entity\Channel"/>
 
         <field name="acceptedAt" column="accepted_at" type="datetime_immutable" nullable="true"/>
         <field name="createdAt" column="created_at" type="datetime_immutable"/>

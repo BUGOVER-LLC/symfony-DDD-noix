@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\User\Domain\Entity;
 
 use App\Acl\Domain\Entity\Role;
+use App\Channels\Domain\Entity\Channel;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Service\UlidService;
 use App\Workspaces\Domain\Entity\Workspace;
@@ -25,6 +26,8 @@ class UserInvitation
 
     private Workspace $workspace;
 
+    private ?Channel $channel;
+
     private ?DateTimeImmutable $acceptedAt = null;
 
     /**
@@ -34,6 +37,18 @@ class UserInvitation
     {
         $this->id = UlidService::generate();
         $this->token = random_bytes(191);
+    }
+
+    public function getChannel(): ?Channel
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?Channel $channel): UserInvitation
+    {
+        $this->channel = $channel;
+
+        return $this;
     }
 
     public function getWorkspace(): Workspace
