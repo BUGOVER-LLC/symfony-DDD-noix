@@ -5,18 +5,16 @@ declare(strict_types=1);
 namespace App\User\Infrastructure\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class InviteUserDTO
 {
-    #[NotBlank]
-    #[GreaterThan(5)]
+    #[Assert\NotBlank()]
+    #[Assert\GreaterThan(5)]
     #[Assert\Email(message: 'The email {{ value }} is not a valid email.')]
     private string $email;
 
-    #[NotBlank]
-    #[GreaterThan(4)]
+    #[Assert\NotBlank()]
+    #[Assert\GreaterThan(4)]
     #[Assert\Choice(choices: [
         'WORKSPACE_ADMIN',
         'WORKSPACE_FULL_MEMBER',
@@ -27,6 +25,7 @@ class InviteUserDTO
     ])]
     private string $role;
 
+    #[Assert\NotBlank(allowNull: true)]
     private ?string $channel;
 
     public function getChannel(): ?string

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Acl\Application\DTO;
 
 use App\Acl\Domain\Entity\Plan;
+use DateTimeImmutable;
 use OpenApi\Attributes\Items;
 use OpenApi\Attributes\Schema;
 
@@ -18,6 +19,7 @@ readonly class PlanDTO
         public float $price,
         public bool $trial,
         public bool $active,
+        public DateTimeImmutable $createdAt,
     )
     {
     }
@@ -35,6 +37,7 @@ readonly class PlanDTO
             price: $plan->getPrice(),
             trial: $plan->isTrial(),
             active: $plan->isActive(),
+            createdAt: $plan->getCreatedAt(),
         );
     }
 }

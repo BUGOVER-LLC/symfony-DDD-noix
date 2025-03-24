@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Workspaces\Domain\Entity;
 
+use App\Channels\Domain\Entity\Channel;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Security\Role;
 use App\Shared\Domain\Service\UlidService;
@@ -21,9 +22,23 @@ class Worker
 
     private Workspace $workspace;
 
+    private ?Channel $channel = null;
+
     public function __construct()
     {
         $this->id = UlidService::generate();
+    }
+
+    public function getChannel(): ?Channel
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?Channel $channel): Worker
+    {
+        $this->channel = $channel;
+
+        return $this;
     }
 
     public function getId(): string

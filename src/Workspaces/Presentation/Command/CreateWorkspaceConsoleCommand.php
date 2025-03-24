@@ -16,6 +16,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 #[AsCommand(name: 'create:workspace')]
 class CreateWorkspaceConsoleCommand extends Command
 {
@@ -33,16 +35,14 @@ class CreateWorkspaceConsoleCommand extends Command
 
         $workspaceName = $io->ask('Workspace name', '', function (?string $input) {
             Assert::assertNotNull($input);
-            Assert::assertIsString($input);
+            Assert::assertGreaterThan(4, $input);
 
             return $input;
         });
 
         /* @var PlanDTO[] $plans */
         $plans = $this->aclAdapter->getPlans();
-        $choisedPlan = $this->choiseFindPlan($io, $plans);
-
-        Assert::assertInstanceOf(PlanDTO::class, $choisedPlan, 'None correct plan');
+        $choisedPlan = $this->chooseFindPlan($io, $plans);
 
         $workspacePath = $io->ask('Workspace path', '', function (?string $input) {
             Assert::assertIsString($input);
@@ -65,11 +65,11 @@ class CreateWorkspaceConsoleCommand extends Command
      * @param PlanDTO[] $plans
      * @return PlanDTO
      */
-    private function choiseFindPlan(SymfonyStyle $io, array $plans): ?PlanDTO
+    private function chooseFindPlan(SymfonyStyle $io, array $plans): PlanDTO
     {
         $choisedPlanName = $io->choice(
             'Choose a plan for your Workspace',
-            array_map(static fn(PlanDTO $item) => $item->name, $plans)
+            array_map(static fn(PlanDTO $item) => $item->name, $plans),
         );
 
         Assert::assertIsString($choisedPlanName, 'Invalid data');
@@ -81,6 +81,8 @@ class CreateWorkspaceConsoleCommand extends Command
             }
         }
 
-        return $choisedPlan ?? null;
+        Assert::assertInstanceOf(PlanDTO::class, $choisedPlan, 'None correct plan');
+
+        return $choisedPlan;
     }
 }

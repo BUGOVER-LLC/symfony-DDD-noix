@@ -49,7 +49,9 @@ class Workspace
 
     public function setRoles(Role $role): Workspace
     {
-        $this->roles->add($role);
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
 
         return $this;
     }
@@ -73,7 +75,9 @@ class Workspace
 
     public function setWorkers(User $worker): Workspace
     {
-        $this->workers[] = $worker;
+        if ($this->workers->contains($worker)) {
+            $this->workers->add($worker);
+        }
 
         return $this;
     }
@@ -85,7 +89,9 @@ class Workspace
 
     public function setChannels(Channel $channel): Workspace
     {
-        $this->channels[] = $channel;
+        if ($this->channels->contains($channel)) {
+            $this->channels->add($channel);
+        }
 
         return $this;
     }
