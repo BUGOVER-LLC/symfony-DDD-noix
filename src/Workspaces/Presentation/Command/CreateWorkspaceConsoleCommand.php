@@ -16,8 +16,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use function PHPUnit\Framework\assertInstanceOf;
-
 #[AsCommand(name: 'create:workspace')]
 class CreateWorkspaceConsoleCommand extends Command
 {

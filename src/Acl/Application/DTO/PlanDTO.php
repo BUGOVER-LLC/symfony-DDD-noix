@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Acl\Application\DTO;
 
-use App\Acl\Domain\Entity\Plan;
+use App\Acl\Application\Assembler\PlanAssembler;
 use DateTimeImmutable;
 use OpenApi\Attributes\Items;
 use OpenApi\Attributes\Schema;
 
 #[Schema(schema: 'PlanDTO', items: new Items(ref: PlanDTO::class))]
-readonly class PlanDTO
+readonly class PlanDTO extends PlanAssembler
 {
     public function __construct(
         public string $id,
@@ -22,22 +22,5 @@ readonly class PlanDTO
         public DateTimeImmutable $createdAt,
     )
     {
-    }
-
-    /**
-     * @param Plan $plan
-     * @return PlanDTO
-     */
-    public static function formEntity(Plan $plan): PlanDTO
-    {
-        return new PlanDTO(
-            id: $plan->getId(),
-            name: $plan->getName(),
-            description: $plan->getDescription(),
-            price: $plan->getPrice(),
-            trial: $plan->isTrial(),
-            active: $plan->isActive(),
-            createdAt: $plan->getCreatedAt(),
-        );
     }
 }
