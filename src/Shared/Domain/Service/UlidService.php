@@ -13,9 +13,11 @@ use Symfony\Component\Uid\Ulid;
  */
 class UlidService
 {
-    public static function generate(): string
+    public static function generate(bool $lower = false): string
     {
-        return Ulid::generate();
+        $ulid = Ulid::generate();
+
+        return $lower ? strtolower($ulid) : $ulid;
     }
 
     public static function isValid(string $ulid): bool

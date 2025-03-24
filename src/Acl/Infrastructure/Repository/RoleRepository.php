@@ -6,6 +6,7 @@ namespace App\Acl\Infrastructure\Repository;
 
 use App\Acl\Domain\Entity\Role;
 use App\Acl\Domain\Repository\RoleRepositoryInterface;
+use App\Workspaces\Domain\Entity\Workspace;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,13 +26,14 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
         $this->entities[$role->getId()] = $role;
     }
 
-    #[\Override] public function findAllRoleByWorkspace(string $workspace): Role
+    #[\Override] public function findAllRoleByWorkspace(string $workspace): array
     {
         $query = $this->createQueryBuilder('r');
 
         return $query
-            ->leftJoin('', '')
-            ->setParameter('w', $workspace)
+            ->innerJoin(Workspace::class, 'w', 'WITH', 'w.id = :workspace')
+            ->where('w.id = :workspace')
+            ->setParameter('workspace', $workspace)
             ->getQuery()
             ->getResult();
     }

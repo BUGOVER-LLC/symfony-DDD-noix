@@ -15,7 +15,8 @@ class UserFactory
 
     public function create(string $email, string $password): User
     {
-        $user = new User($email);
+        $user = new User();
+        $user->setEmail($email);
         $user->setPassword($password, $this->passwordHasher);
 
         return $user;

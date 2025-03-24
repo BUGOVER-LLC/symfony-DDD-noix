@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Acl\Domain\Fixture;
 
-use App\Acl\Domain\Factory\CreateRoleFactory;
+use App\Acl\Domain\Factory\RoleFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 class RoleFixture extends Fixture
 {
     public function __construct(
-        private readonly CreateRoleFactory $createRoleFactory,
+        private readonly RoleFactory $createRoleFactory,
         private readonly ContainerBagInterface $params,
     )
     {

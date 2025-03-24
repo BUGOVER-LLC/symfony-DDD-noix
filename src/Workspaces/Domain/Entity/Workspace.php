@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Workspaces\Domain\Entity;
 
 use App\Acl\Domain\Entity\Plan;
+use App\Acl\Domain\Entity\Role;
 use App\Channels\Domain\Entity\Channel;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Service\UlidService;
@@ -30,12 +31,29 @@ class Workspace
 
     private Collection $channels;
 
+    private Collection $roles;
+
     public function __construct()
     {
         $this->id = UlidService::generate();
 
         $this->channels = new ArrayCollection();
         $this->workers = new ArrayCollection();
+        $this->roles = new ArrayCollection();
+    }
+
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(Role $role): Workspace
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+
+        return $this;
     }
 
     public function getUrlPath(): string
@@ -57,7 +75,9 @@ class Workspace
 
     public function setWorkers(User $worker): Workspace
     {
-        $this->workers[] = $worker;
+        if ($this->workers->contains($worker)) {
+            $this->workers->add($worker);
+        }
 
         return $this;
     }
@@ -69,7 +89,9 @@ class Workspace
 
     public function setChannels(Channel $channel): Workspace
     {
-        $this->channels[] = $channel;
+        if ($this->channels->contains($channel)) {
+            $this->channels->add($channel);
+        }
 
         return $this;
     }

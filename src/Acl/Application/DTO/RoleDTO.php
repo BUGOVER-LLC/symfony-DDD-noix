@@ -16,7 +16,7 @@ readonly class RoleDTO
     {
     }
 
-    public function fromEntity(Role $role): static
+    public static function fromEntity(Role $role): static
     {
         return new self($role->getId(), $role->getName(), $role->getKey());
     }

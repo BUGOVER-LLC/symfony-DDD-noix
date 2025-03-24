@@ -18,6 +18,10 @@
         <source>unauthenticated</source>
         <target>Unauthenticated, User not found.</target>
       </trans-unit>
+      <trans-unit id="userInvited">
+        <source>invitation</source>
+        <target>User invited successfully and email sent.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

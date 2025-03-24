@@ -32,10 +32,9 @@ class User implements AuthUserInterface
 
     private ?Workspace $currentWorkspace;
 
-    public function __construct(string $email)
+    public function __construct()
     {
         $this->id = UlidService::generate();
-        $this->email = $email;
     }
 
     public function getCurrentWorkspace(): ?Workspace
@@ -96,7 +95,9 @@ class User implements AuthUserInterface
 
     #[Override] public function getRoles(): array
     {
-        return [];
+        return [
+            'WORKSPACE_FULL_MEMBER'
+        ];
     }
 
     #[Override] public function eraseCredentials(): void

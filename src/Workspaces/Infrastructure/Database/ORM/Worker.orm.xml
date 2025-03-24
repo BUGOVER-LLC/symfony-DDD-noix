@@ -12,6 +12,7 @@
         </id>
 
         <many-to-one field="workspace" target-entity="App\Workspaces\Domain\Entity\Workspace"/>
+        <many-to-one field="channel" target-entity="App\Channels\Domain\Entity\Channel"/>
         <many-to-one field="user" target-entity="App\User\Domain\Entity\User"/>
         <many-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>
 

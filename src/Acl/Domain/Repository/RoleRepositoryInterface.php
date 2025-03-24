@@ -10,5 +10,9 @@ interface RoleRepositoryInterface
 {
     public function add(Role $role);
 
-    public function findAllRoleByWorkspace(string $workspace): Role;
+    /**
+     * @param string $workspace
+     * @return array<Role>
+     */
+    public function findAllRoleByWorkspace(string $workspace): array;
 }

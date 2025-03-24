@@ -3,25 +3,19 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Acl\Domain\Entity\Role"
-            table="acl_role"
-            repository-class="App\Role\Infrastructure\Repository\RoleRepository"
+    <entity name="App\Workspaces\Domain\Entity\WorkspaceRole"
+            table="workspaces_workspace_role"
     >
         <id name="id" type="string" length="26">
             <generator strategy="NONE"/>
         </id>
 
-        <field name="key" column="key" unique="true" length="50"/>
-        <field name="name" column="name" unique="true"/>
+        <many-to-one field="workspace" target-entity="App\Workspaces\Domain\Entity\Workspace"/>
+        <many-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>
 
         <field name="createdAt" column="created_at" type="datetime_immutable"/>
-        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
-
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
-        </lifecycle-callbacks>
-        <lifecycle-callbacks>
-            <lifecycle-callback type="preUpdate" method="setUpdatedAt"/>
         </lifecycle-callbacks>
     </entity>
 </doctrine-mapping>
