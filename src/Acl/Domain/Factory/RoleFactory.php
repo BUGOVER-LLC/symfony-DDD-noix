@@ -6,7 +6,7 @@ namespace App\Acl\Domain\Factory;
 
 use App\Acl\Domain\Entity\Role;
 
-class RoleFactory
+final class RoleFactory
 {
     public function create(string $key, string $name): Role
     {

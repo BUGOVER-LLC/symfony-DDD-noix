@@ -10,7 +10,7 @@ use OpenApi\Attributes\Items;
 use OpenApi\Attributes\Schema;
 
 #[Schema(schema: 'PlanDTO', items: new Items(ref: PlanDTO::class))]
-final class PlanDTO extends PlanAssembler
+readonly final class PlanDTO extends PlanAssembler
 {
     public function __construct(
         public string $id,

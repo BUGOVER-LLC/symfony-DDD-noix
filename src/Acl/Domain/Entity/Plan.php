@@ -30,9 +30,9 @@ class Plan
 
     private Collection $planFeatures;
 
-    public function __construct(string $id = null)
+    public function __construct()
     {
-        $this->id = $id ?: UlidService::generate();
+        $this->id = UlidService::generate();
 
         $this->workspaces = new ArrayCollection();
         $this->planFeatures = new ArrayCollection();

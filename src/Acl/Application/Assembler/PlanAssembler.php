@@ -7,16 +7,13 @@ namespace App\Acl\Application\Assembler;
 use App\Acl\Application\DTO\PlanDTO;
 use App\Acl\Domain\Entity\Plan;
 
-/**
- * @TODO: this is experimental
- */
-class PlanAssembler
+readonly class PlanAssembler
 {
-    private static Plan $entity;
+    private array $entity;
 
-    public static function toDto(Plan $plan): PlanDTO
+    public function fromEntity(Plan $plan): PlanDTO
     {
-        self::$entity = $plan;
+        $this->entity[$plan->getId()] = $plan;
 
         return new PlanDTO(
             id: $plan->getId(),
@@ -29,8 +26,12 @@ class PlanAssembler
         );
     }
 
-    public static function toEntity(): Plan
+    /**
+     * @param string|null $id
+     * @return Plan[]|Plan
+     */
+    public function toEntity(string $id = null): array|Plan
     {
-        return self::$entity;
+        return $id ? $this->entity[$id] : $this->entity;
     }
 }
