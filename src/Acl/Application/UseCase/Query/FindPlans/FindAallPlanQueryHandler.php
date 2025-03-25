@@ -17,13 +17,13 @@ readonly class FindAallPlanQueryHandler implements QueryHandlerInterface
 
     /**
      * @param FindAllPlanQuery $planQuery
-     * @return array<Plan>
+     * @return array<PlanDTO>
      */
     public function __invoke(FindAllPlanQuery $planQuery): array
     {
         return array_map(
-            callback: static fn(Plan $plan) => PlanDTO::formEntity($plan),
-            array: $this->planRepository->findAll()
+            callback: static fn(Plan $plan) => PlanDTO::toDto($plan),
+            array: $this->planRepository->findAll(),
         );
     }
 }

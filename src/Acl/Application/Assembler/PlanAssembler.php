@@ -10,10 +10,14 @@ use App\Acl\Domain\Entity\Plan;
 /**
  * @TODO: this is experimental
  */
-readonly class PlanAssembler
+class PlanAssembler
 {
-    public function toDto(Plan $plan): PlanDTO
+    private static Plan $entity;
+
+    public static function toDto(Plan $plan): PlanDTO
     {
+        self::$entity = $plan;
+
         return new PlanDTO(
             id: $plan->getId(),
             name: $plan->getName(),
@@ -25,13 +29,8 @@ readonly class PlanAssembler
         );
     }
 
-    public function toEntity(PlanDTO $planDTO): Plan
+    public static function toEntity(): Plan
     {
-        return (new Plan())
-            ->setName($planDTO->name)
-            ->setDescription($planDTO->description)
-            ->setTrial($planDTO->trial)
-            ->setPrice($planDTO->price)
-            ->setActive($planDTO->active);
+        return self::$entity;
     }
 }

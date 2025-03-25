@@ -52,7 +52,7 @@ class CreateWorkspaceConsoleCommand extends Command
             return $input;
         });
 
-        $command = new CreateWorkspaceCommand($workspaceName, $workspacePath, $choisedPlan);
+        $command = new CreateWorkspaceCommand($workspaceName, $workspacePath, $choisedPlan::toEntity());
         $this->adminUseCaseInteractor->createWorkspace($command);
 
         return Command::SUCCESS;
