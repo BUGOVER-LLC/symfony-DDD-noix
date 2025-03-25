@@ -15,6 +15,5 @@ class InviteUserAction implements InviteUserActionInterface
 
     #[\Override] public function invite(InviteUserDTO $payload)
     {
-
     }
 }

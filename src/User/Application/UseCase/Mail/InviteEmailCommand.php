@@ -8,7 +8,7 @@ use App\Shared\Application\Command\Command;
 
 readonly class InviteEmailCommand extends Command
 {
-    public function __construct()
+    public function __construct(public string $from, public string $template)
     {
     }
 }
