@@ -16,8 +16,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use function PHPUnit\Framework\assertInstanceOf;
-
 #[AsCommand(name: 'create:workspace')]
 class CreateWorkspaceConsoleCommand extends Command
 {
@@ -54,7 +52,7 @@ class CreateWorkspaceConsoleCommand extends Command
             return $input;
         });
 
-        $command = new CreateWorkspaceCommand($workspaceName, $workspacePath, $choisedPlan);
+        $command = new CreateWorkspaceCommand($workspaceName, $workspacePath, $choisedPlan->toEntity($choisedPlan->id));
         $this->adminUseCaseInteractor->createWorkspace($command);
 
         return Command::SUCCESS;

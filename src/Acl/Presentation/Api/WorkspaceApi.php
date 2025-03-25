@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Acl\Presentation\Port;
+namespace App\Acl\Presentation\Api;
 
 use App\Acl\Application\DTO\PlanDTO;
 use App\Acl\Application\DTO\RoleDTO;

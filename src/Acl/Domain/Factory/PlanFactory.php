@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Acl\Domain\Factory;
 
 use App\Acl\Domain\Entity\Plan;
-use App\Acl\Domain\Entity\PlanFeature;
 use Doctrine\ORM\EntityManagerInterface;
 
-class PlanFactory
+final class PlanFactory
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PlanFeatureFactory $planFeatureFactory,
+    )
     {
     }
 
@@ -34,12 +36,13 @@ class PlanFactory
         $this->entityManager->persist($plan);
 
         foreach ($planFeatures as $planFeatureItem) {
-            $planFeature = new PlanFeature();
+            $planFeature = $this->planFeatureFactory->create(
+                name: $planFeatureItem['name'],
+                description: $planFeatureItem['description'],
+                plan: $plan
+            );
 
-            $planFeature->setName($planFeatureItem['name']);
-            $planFeature->setDescription($planFeatureItem['description']);
             $plan->setPlanFeatures($planFeature);
-            $this->entityManager->persist($planFeature);
         }
 
         return $plan;
