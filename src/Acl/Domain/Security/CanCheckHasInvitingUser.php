@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Acl\Domain\Security;
 
 use App\User\Domain\Entity\User;
-use App\User\Infrastructure\DTO\InviteUserDTO;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
 interface CanCheckHasInvitingUser
 {
-    public function canInvite(InviteUserDTO $userInvitation, User $user): bool;
+    public function canInvite(MapRequestPayload $userInvitation, User $user): bool;
 }

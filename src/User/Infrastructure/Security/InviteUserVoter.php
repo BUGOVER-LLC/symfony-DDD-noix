@@ -6,8 +6,8 @@ namespace App\User\Infrastructure\Security;
 
 use App\Acl\Domain\Security\CanCheckHasInvitingUser;
 use App\User\Domain\Entity\User;
-use App\User\Infrastructure\DTO\InviteUserDTO;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -21,7 +21,7 @@ class InviteUserVoter extends Voter implements CanCheckHasInvitingUser
 
     #[\Override] protected function supports(string $attribute, mixed $subject): bool
     {
-        if ($attribute !== self::INVITE_USER || !$subject instanceof InviteUserDTO) {
+        if ($attribute !== self::INVITE_USER || !$subject instanceof MapRequestPayload) {
             return false;
         }
 
@@ -44,7 +44,7 @@ class InviteUserVoter extends Voter implements CanCheckHasInvitingUser
         return true;
     }
 
-    public function canInvite(InviteUserDTO $userInvitation, User $user): bool
+    public function canInvite(MapRequestPayload $userInvitation, User $user): bool
     {
         return true;
     }

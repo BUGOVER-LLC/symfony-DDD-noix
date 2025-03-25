@@ -8,7 +8,7 @@ parameters:
 
   exclude:
     - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
-    - '#.*\/src\/.*\/Domain\/Entity\/.*#'
+    - '#.*\/src\/.*\/Application\/DTO\/.*#'
 
   layers:
     - name: Shared
@@ -36,6 +36,31 @@ parameters:
         - type: directory
           value: /src/Acl/.*
 
+    - name: Board
+      collectors:
+        - type: directory
+          value: /src/Boards/.*
+
+    - name: Message
+      collectors:
+        - type: directory
+          value: /src/Messages/.*
+
   ruleset:
     User:
+      - Shared
+
+    Workspace:
+      - Shared
+
+    Acl:
+      - Shared
+
+    Board:
+      - Shared
+
+    Channel:
+      - Shared
+
+    Message:
       - Shared
