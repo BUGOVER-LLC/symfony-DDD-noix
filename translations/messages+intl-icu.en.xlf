@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="userInvited">
         <source>invitation</source>
-        <target>User invited successfully and email sent.</target>
+        <target>User invited successfully and email sent to { email }.</target>
       </trans-unit>
     </body>
   </file>

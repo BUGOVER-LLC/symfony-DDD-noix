@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Shared\Domain\ValueObject;
 
-use App\Shared\Domain\Service\AssertService;
 use App\Shared\Domain\Service\UlidService;
+use Webmozart\Assert\Assert;
 
 class GlobalUserId
 {
@@ -11,7 +13,7 @@ class GlobalUserId
 
     public function __construct(string $id)
     {
-        AssertService::true(UlidService::isValid($id));
+        Assert::true(UlidService::isValid($id));
         $this->id = $id;
     }
 

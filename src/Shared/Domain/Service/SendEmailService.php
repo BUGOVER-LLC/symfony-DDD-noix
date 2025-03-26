@@ -14,14 +14,14 @@ class SendEmailService
 
     private TemplatedEmail $template;
 
-    public function __construct(private readonly Email $mimeEmail, private readonly MailerInterface $mailer)
+    public function __construct(private readonly MailerInterface $mailer)
     {
     }
 
     public function pass(string $email)
     {
-        $this->emailInstance = $this->mimeEmail
-            ->from()
+        $this->emailInstance = (new Email())
+            ->from($email)
             ->to($email);
     }
 
