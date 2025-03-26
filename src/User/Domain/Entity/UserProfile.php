@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Domain\Entity;
 
+use App\Acl\Domain\Entity\Role;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Service\UlidService;
 use App\Workspaces\Domain\Entity\Workspace;
@@ -25,9 +26,23 @@ class UserProfile
 
     private DateTime $timezone;
 
+    private Role $role;
+
     public function __construct()
     {
         $this->id = UlidService::generate();
+    }
+
+    public function getRole(): Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(Role $role): UserProfile
+    {
+        $this->role = $role;
+
+        return $this;
     }
 
     public function getId(): string

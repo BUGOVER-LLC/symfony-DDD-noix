@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250323070216 extends AbstractMigration
+final class Version20250326153514 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -58,25 +58,25 @@ final class Version20250323070216 extends AbstractMigration
         $this->addSql('CREATE TABLE users_user (email VARCHAR(191) NOT NULL, phone VARCHAR(19) DEFAULT NULL, password VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, current_workspace_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_421A9847E7927C74 ON users_user (email)');
         $this->addSql('CREATE INDEX IDX_421A98477D65B4C4 ON users_user (current_workspace_id)');
-        $this->addSql('CREATE TABLE users_user_invitation (email VARCHAR(191) NOT NULL, token VARCHAR(191) NOT NULL, accepted_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(26) NOT NULL, role_id VARCHAR(26) DEFAULT NULL, workspace_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE users_user_invitation (email VARCHAR(191) NOT NULL, token VARCHAR(191) NOT NULL, accepted_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(26) NOT NULL, role_id VARCHAR(26) DEFAULT NULL, workspace_id VARCHAR(26) DEFAULT NULL, channel_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_ED0F58D4E7927C74 ON users_user_invitation (email)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_ED0F58D45F37A13B ON users_user_invitation (token)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_ED0F58D4D60322AC ON users_user_invitation (role_id)');
         $this->addSql('CREATE INDEX IDX_ED0F58D482D40A1F ON users_user_invitation (workspace_id)');
-        $this->addSql('CREATE TABLE users_user_profiles (full_name VARCHAR(190) NOT NULL, photo VARCHAR(255) DEFAULT NULL, timezone TIMESTAMP(0) WITH TIME ZONE NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, user_id VARCHAR(26) DEFAULT NULL, workspace_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_ED0F58D472F5A1AA ON users_user_invitation (channel_id)');
+        $this->addSql('CREATE TABLE users_user_profiles (full_name VARCHAR(190) NOT NULL, photo VARCHAR(255) DEFAULT NULL, timezone TIMESTAMP(0) WITH TIME ZONE NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, user_id VARCHAR(26) DEFAULT NULL, workspace_id VARCHAR(26) DEFAULT NULL, role_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_6258693DA76ED395 ON users_user_profiles (user_id)');
         $this->addSql('CREATE INDEX IDX_6258693D82D40A1F ON users_user_profiles (workspace_id)');
-        $this->addSql('CREATE TABLE workspaces_worker (created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(26) NOT NULL, workspace_id VARCHAR(26) DEFAULT NULL, user_id VARCHAR(26) DEFAULT NULL, role_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_6258693DD60322AC ON users_user_profiles (role_id)');
+        $this->addSql('CREATE TABLE workspaces_worker (created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(26) NOT NULL, workspace_id VARCHAR(26) DEFAULT NULL, channel_id VARCHAR(26) DEFAULT NULL, user_id VARCHAR(26) DEFAULT NULL, role_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_1065C4F382D40A1F ON workspaces_worker (workspace_id)');
+        $this->addSql('CREATE INDEX IDX_1065C4F372F5A1AA ON workspaces_worker (channel_id)');
         $this->addSql('CREATE INDEX IDX_1065C4F3A76ED395 ON workspaces_worker (user_id)');
         $this->addSql('CREATE INDEX IDX_1065C4F3D60322AC ON workspaces_worker (role_id)');
         $this->addSql('CREATE TABLE workspaces_workspace (name VARCHAR(300) NOT NULL, members_count SMALLINT NOT NULL, url_path VARCHAR(500) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, plan_id VARCHAR(26) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_A539351B5E237E06 ON workspaces_workspace (name)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_A539351B150042B7 ON workspaces_workspace (url_path)');
         $this->addSql('CREATE INDEX IDX_A539351BE899029B ON workspaces_workspace (plan_id)');
-        $this->addSql('CREATE TABLE workspaces_workspace_role (created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, id VARCHAR(26) NOT NULL, workspace_id VARCHAR(26) DEFAULT NULL, role_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_2243C2C282D40A1F ON workspaces_workspace_role (workspace_id)');
-        $this->addSql('CREATE INDEX IDX_2243C2C2D60322AC ON workspaces_workspace_role (role_id)');
         $this->addSql('ALTER TABLE acl_plan_features ADD CONSTRAINT FK_E5A06A02E899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE acl_plan_roles ADD CONSTRAINT FK_B35CAA2EE899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE acl_plan_roles ADD CONSTRAINT FK_B35CAA2ED60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -96,14 +96,15 @@ final class Version20250323070216 extends AbstractMigration
         $this->addSql('ALTER TABLE users_user ADD CONSTRAINT FK_421A98477D65B4C4 FOREIGN KEY (current_workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE users_user_invitation ADD CONSTRAINT FK_ED0F58D4D60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE users_user_invitation ADD CONSTRAINT FK_ED0F58D482D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE users_user_invitation ADD CONSTRAINT FK_ED0F58D472F5A1AA FOREIGN KEY (channel_id) REFERENCES channels_channel (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE users_user_profiles ADD CONSTRAINT FK_6258693DA76ED395 FOREIGN KEY (user_id) REFERENCES users_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE users_user_profiles ADD CONSTRAINT FK_6258693D82D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE users_user_profiles ADD CONSTRAINT FK_6258693DD60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE workspaces_worker ADD CONSTRAINT FK_1065C4F382D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE workspaces_worker ADD CONSTRAINT FK_1065C4F372F5A1AA FOREIGN KEY (channel_id) REFERENCES channels_channel (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE workspaces_worker ADD CONSTRAINT FK_1065C4F3A76ED395 FOREIGN KEY (user_id) REFERENCES users_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE workspaces_worker ADD CONSTRAINT FK_1065C4F3D60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE workspaces_workspace ADD CONSTRAINT FK_A539351BE899029B FOREIGN KEY (plan_id) REFERENCES acl_plan (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE workspaces_workspace_role ADD CONSTRAINT FK_2243C2C282D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE workspaces_workspace_role ADD CONSTRAINT FK_2243C2C2D60322AC FOREIGN KEY (role_id) REFERENCES acl_role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     public function down(Schema $schema): void
@@ -128,14 +129,15 @@ final class Version20250323070216 extends AbstractMigration
         $this->addSql('ALTER TABLE users_user DROP CONSTRAINT FK_421A98477D65B4C4');
         $this->addSql('ALTER TABLE users_user_invitation DROP CONSTRAINT FK_ED0F58D4D60322AC');
         $this->addSql('ALTER TABLE users_user_invitation DROP CONSTRAINT FK_ED0F58D482D40A1F');
+        $this->addSql('ALTER TABLE users_user_invitation DROP CONSTRAINT FK_ED0F58D472F5A1AA');
         $this->addSql('ALTER TABLE users_user_profiles DROP CONSTRAINT FK_6258693DA76ED395');
         $this->addSql('ALTER TABLE users_user_profiles DROP CONSTRAINT FK_6258693D82D40A1F');
+        $this->addSql('ALTER TABLE users_user_profiles DROP CONSTRAINT FK_6258693DD60322AC');
         $this->addSql('ALTER TABLE workspaces_worker DROP CONSTRAINT FK_1065C4F382D40A1F');
+        $this->addSql('ALTER TABLE workspaces_worker DROP CONSTRAINT FK_1065C4F372F5A1AA');
         $this->addSql('ALTER TABLE workspaces_worker DROP CONSTRAINT FK_1065C4F3A76ED395');
         $this->addSql('ALTER TABLE workspaces_worker DROP CONSTRAINT FK_1065C4F3D60322AC');
         $this->addSql('ALTER TABLE workspaces_workspace DROP CONSTRAINT FK_A539351BE899029B');
-        $this->addSql('ALTER TABLE workspaces_workspace_role DROP CONSTRAINT FK_2243C2C282D40A1F');
-        $this->addSql('ALTER TABLE workspaces_workspace_role DROP CONSTRAINT FK_2243C2C2D60322AC');
         $this->addSql('DROP TABLE acl_plan');
         $this->addSql('DROP TABLE acl_plan_features');
         $this->addSql('DROP TABLE acl_plan_roles');
@@ -155,6 +157,5 @@ final class Version20250323070216 extends AbstractMigration
         $this->addSql('DROP TABLE users_user_profiles');
         $this->addSql('DROP TABLE workspaces_worker');
         $this->addSql('DROP TABLE workspaces_workspace');
-        $this->addSql('DROP TABLE workspaces_workspace_role');
     }
 }

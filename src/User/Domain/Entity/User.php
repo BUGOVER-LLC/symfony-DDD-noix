@@ -8,6 +8,7 @@ use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Security\AuthUserInterface;
 use App\Shared\Domain\Service\UlidService;
 use App\Workspaces\Domain\Entity\Workspace;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Override;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -35,6 +36,10 @@ class User implements AuthUserInterface
     public function __construct()
     {
         $this->id = UlidService::generate();
+
+        $this->workspaces = new ArrayCollection();
+        $this->profiles = new ArrayCollection();
+        $this->refreshTokens = new ArrayCollection();
     }
 
     public function getCurrentWorkspace(): ?Workspace

@@ -13,4 +13,6 @@ interface UserRepositoryInterface
     public function findByUlid(string $ulid): ?User;
 
     public function findByEmail(string $email): ?User;
+
+    public function roleByCurrentWorkspace(string $userId);
 }

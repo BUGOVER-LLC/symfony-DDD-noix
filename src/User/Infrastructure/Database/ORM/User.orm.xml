@@ -21,6 +21,8 @@
             <join-column name="current_workspace_id"/>
         </many-to-one>
 
+        <one-to-many field="profiles" target-entity="App\User\Domain\Entity\UserProfile" mapped-by="user"/>
+
         <one-to-many
             field="refreshTokens"
             target-entity="App\User\Domain\Entity\RefreshToken"

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(name: 'create:workspace')]
-class CreateWorkspaceConsoleCommand extends Command
+final class CreateWorkspaceConsoleCommand extends Command
 {
     public function __construct(
         private readonly AdminUseCaseInteractor $adminUseCaseInteractor,
