@@ -24,6 +24,12 @@
             <join-column nullable="false" name="plan_id"/>
         </many-to-one>
 
+        <one-to-many
+            field="workers"
+            target-entity="App\Workspaces\Domain\Entity\Worker"
+            mapped-by="workspace"
+        />
+
         <field name="name" column="name" length="300" unique="true"/>
         <field name="membersCount" column="members_count" type="smallint"/>
         <field name="urlPath" column="url_path" length="500" unique="true"/>

@@ -17,7 +17,10 @@
         <field name="createdAt" column="created_at" type="datetime_immutable"/>
         <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
 
-        <many-to-one field="currentWorkspace" target-entity="App\Workspaces\Domain\Entity\Workspace">
+        <many-to-one
+            field="currentWorkspace"
+            target-entity="App\Workspaces\Domain\Entity\Workspace"
+        >
             <join-column name="current_workspace_id"/>
         </many-to-one>
 
@@ -27,7 +30,17 @@
             mapped-by="member"
         />
 
-        <one-to-many field="profiles" target-entity="App\User\Domain\Entity\UserProfile" mapped-by="user"/>
+        <one-to-many
+            field="workspaces"
+            target-entity="App\Workspaces\Domain\Entity\Worker"
+            mapped-by="user"
+        />
+
+        <one-to-many
+            field="profiles"
+            target-entity="App\User\Domain\Entity\UserProfile"
+            mapped-by="user"
+        />
 
         <one-to-many
             field="refreshTokens"
