@@ -6,7 +6,7 @@ namespace App\User\Infrastructure\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class InviteUserDTO
+readonly class InviteUserDTO
 {
     #[Assert\NotBlank()]
     #[Assert\GreaterThan(5)]

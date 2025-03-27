@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\User\Application\UseCase\Mail;
 
 use App\Shared\Application\Command\Command;
+use App\Shared\Application\Command\CommandHandlerInterface;
 use App\Shared\Domain\Service\SendEmailService;
 
-readonly class InviteEmailCommandHandler extends Command
+readonly class InviteEmailCommandHandler implements CommandHandlerInterface
 {
     public function __construct(private SendEmailService $emailService)
     {

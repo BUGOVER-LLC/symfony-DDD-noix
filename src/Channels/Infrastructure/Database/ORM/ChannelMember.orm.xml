@@ -3,35 +3,31 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Workspaces\Domain\Entity\Worker"
-            table="workspaces_worker"
-            repository-class="App\Workspaces\Infrastructure\Repository\WorkerRepository"
+    <entity name="App\Channels\Domain\Entity\ChannelMember"
+            table="channels_channel_member"
     >
         <id name="id" type="string" length="26">
             <generator strategy="NONE"/>
         </id>
 
         <many-to-one
-            field="workspace"
-            target-entity="App\Workspaces\Domain\Entity\Workspace"
-            inversed-by="workers"
-        />
-
-        <many-to-one
-            field="user"
-            target-entity="App\User\Domain\Entity\User"
-            inversed-by="workspaces"
-        />
-
-        <many-to-one
             field="channel"
             target-entity="App\Channels\Domain\Entity\Channel"
-            inversed-by="workers"
-        />
+            inversed-by="members"
+        >
+            <join-column name="channel_id"/>
+        </many-to-one>
 
-        <many-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>
+        <many-to-one
+            field="member"
+            target-entity="App\User\Domain\Entity\User"
+            inversed-by="channels"
+        >
+            <join-column name="user_id"/>
+        </many-to-one>
 
         <field name="createdAt" column="created_at" type="datetime_immutable"/>
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="setCreatedAt"/>
         </lifecycle-callbacks>
