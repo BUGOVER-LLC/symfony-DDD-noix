@@ -66,7 +66,6 @@ services:
   # Listeners
   acme_api.event.jwt_created_listener:
     class: App\User\Infrastructure\EventHandler\JWTCreatedEventHandler
-#    arguments: [ '@security.se' ]
     tags:
       - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
@@ -75,3 +74,14 @@ services:
       $logger: '@logger'
     tags:
       - { name: doctrine.event_subscriber }
+
+  App\Shared\Domain\Resolver\ExceptionMappingResolver:
+    arguments: [ '%exceptions%' ]
+
+  App\Shared\Infrastructure\EventListener\Exception\ApiExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
+
+  App\Shared\Infrastructure\EventListener\Exception\ValidationExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, priority: 15 }
