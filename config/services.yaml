@@ -7,7 +7,9 @@ parameters:
   uploadDir: '%kernel.project_dir%/public/upload'
   exceptions:
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { code: 404 }
-    App\Exception\RequestBodyConvertException: { code: 400, hidden: false }
+    App\Shared\Domain\Exception\RequestBodyConvertException: { code: 400, hidden: false }
+    App\Shared\Domain\Exception\ValidationException: { code: 400, hidden: false }
+    App\User\Infrastructure\Exception\UserAlreadyHaveInvitationException: { code: 420, hidden: false }
 
 services:
   # default configuration for services in *this* file
