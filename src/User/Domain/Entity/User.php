@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Domain\Entity;
 
+use App\Channels\Domain\Entity\Channel;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Security\AuthUserInterface;
 use App\Shared\Domain\Service\UlidService;
@@ -23,15 +24,17 @@ class User implements AuthUserInterface
 
     private ?string $phone;
 
+    private ?string $password;
+
+    private ?Workspace $currentWorkspace;
+
     private Collection $workspaces;
 
     private Collection $profiles;
 
-    private ?string $password;
-
     private Collection $refreshTokens;
 
-    private ?Workspace $currentWorkspace;
+    private ?Collection $channels;
 
     public function __construct()
     {
@@ -40,6 +43,21 @@ class User implements AuthUserInterface
         $this->workspaces = new ArrayCollection();
         $this->profiles = new ArrayCollection();
         $this->refreshTokens = new ArrayCollection();
+        $this->channels = new ArrayCollection();
+    }
+
+    public function getChannels(): ?Collection
+    {
+        return $this->channels;
+    }
+
+    public function setChannels(?Channel $channel): User
+    {
+        if (!$this->channels->contains($channel)) {
+            $this->channels->add($channel);
+        }
+
+        return $this;
     }
 
     public function getCurrentWorkspace(): ?Workspace
@@ -101,7 +119,7 @@ class User implements AuthUserInterface
     #[Override] public function getRoles(): array
     {
         return [
-            'WORKSPACE_FULL_MEMBER'
+            'WORKSPACE_FULL_MEMBER',
         ];
     }
 

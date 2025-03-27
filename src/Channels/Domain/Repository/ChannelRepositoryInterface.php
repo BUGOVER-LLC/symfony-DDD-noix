@@ -6,7 +6,9 @@ namespace App\Channels\Domain\Repository;
 
 interface ChannelRepositoryInterface
 {
-    public function findAllChannelsByUserId(int $userId): array;
+    public function findAllChannelsByUserId(string $userId): array;
 
-    public function findAllChannelsByUserIdWorkspaceId(int $userId, int $workspaceId): array;
+    public function getTotalConnectedCount(string $channelId): int;
+
+    public function getMembersCount(string $channelId): int;
 }

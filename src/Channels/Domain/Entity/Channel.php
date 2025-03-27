@@ -7,7 +7,9 @@ namespace App\Channels\Domain\Entity;
 use App\Boards\Domain\Entity\Board;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
 use App\Shared\Domain\Service\UlidService;
+use App\User\Domain\Entity\User;
 use App\Workspaces\Domain\Entity\Workspace;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Channel
@@ -20,15 +22,49 @@ class Channel
 
     private int $totalConnected = 0;
 
+    private int $membersCount = 0;
+
     private Workspace $workspace;
 
     private Collection $sharedChannels;
 
     private Collection $boards;
 
+    private Collection $members;
+
     public function __construct()
     {
         $this->id = UlidService::generate();
+
+        $this->sharedChannels = new ArrayCollection();
+        $this->boards = new ArrayCollection();
+        $this->members = new ArrayCollection();
+    }
+
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function setMembers(User $member): Channel
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+        }
+
+        return $this;
+    }
+
+    public function getMembersCount(): int
+    {
+        return $this->membersCount;
+    }
+
+    public function setMembersCount(int $membersCount): Channel
+    {
+        $this->membersCount = $membersCount;
+
+        return $this;
     }
 
     public function getBoards(): Collection

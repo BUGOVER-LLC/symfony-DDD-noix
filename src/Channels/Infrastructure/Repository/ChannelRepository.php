@@ -16,11 +16,37 @@ class ChannelRepository extends ServiceEntityRepository implements ChannelReposi
         parent::__construct($registry, Channel::class);
     }
 
-    public function findAllChannelsByUserId(int $userId): array
+    /**
+     * @param string $userId
+     * @return Channel[]
+     */
+    public function findAllChannelsByUserId(string $userId): array
     {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.members', 'u')
+            ->where('u.id = :user')
+            ->setParameter('user', $userId)
+            ->getQuery()
+            ->getResult();
     }
 
-    public function findAllChannelsByUserIdWorkspaceId(int $userId, int $workspaceId): array
+    #[\Override] public function getTotalConnectedCount(string $channelId): int
     {
+        return $this->createQueryBuilder('c')
+            ->select('c.totalConnected')
+            ->where('c.id = :channel')
+            ->setParameter('channel', $channelId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    #[\Override] public function getMembersCount(string $channelId): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.membersCount')
+            ->where('c.id = :channel')
+            ->setParameter('channel', $channelId)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

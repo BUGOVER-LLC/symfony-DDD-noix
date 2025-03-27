@@ -13,12 +13,18 @@
         <many-to-one
             field="channel"
             target-entity="App\Channels\Domain\Entity\Channel"
-        />
+            inversed-by="members"
+        >
+            <join-column name="channel_id"/>
+        </many-to-one>
 
         <many-to-one
             field="member"
             target-entity="App\User\Domain\Entity\User"
-        />
+            inversed-by="channels"
+        >
+            <join-column name="user_id"/>
+        </many-to-one>
 
         <field name="createdAt" column="created_at" type="datetime_immutable"/>
         <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>

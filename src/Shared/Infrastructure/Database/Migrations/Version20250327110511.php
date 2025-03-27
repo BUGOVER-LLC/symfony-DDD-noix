@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250326153514 extends AbstractMigration
+final class Version20250327110511 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -40,8 +40,11 @@ final class Version20250326153514 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_2828F6DEE7EC5785 ON boards_board_steps (board_id)');
         $this->addSql('CREATE TABLE boards_shared_boards (name VARCHAR(300) NOT NULL, members_count SMALLINT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, board_id VARCHAR(26) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_6EB136F0E7EC5785 ON boards_shared_boards (board_id)');
-        $this->addSql('CREATE TABLE channels_channel (name VARCHAR(250) NOT NULL, total_connected SMALLINT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, workspace_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE channels_channel (name VARCHAR(250) NOT NULL, total_connected SMALLINT NOT NULL, members_count SMALLINT DEFAULT 0 NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, workspace_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_C5C46D2482D40A1F ON channels_channel (workspace_id)');
+        $this->addSql('CREATE TABLE channels_channel_member (created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, channel_id VARCHAR(26) DEFAULT NULL, user_id VARCHAR(26) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_5B494CDF72F5A1AA ON channels_channel_member (channel_id)');
+        $this->addSql('CREATE INDEX IDX_5B494CDFA76ED395 ON channels_channel_member (user_id)');
         $this->addSql('CREATE TABLE channels_shared_channel_workspaces (created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, id VARCHAR(26) NOT NULL, shared_channel_id VARCHAR(26) NOT NULL, target_workspace_id VARCHAR(26) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_56C4F9F86E64165 ON channels_shared_channel_workspaces (shared_channel_id)');
         $this->addSql('CREATE INDEX IDX_56C4F9F86286D94E ON channels_shared_channel_workspaces (target_workspace_id)');
@@ -86,6 +89,8 @@ final class Version20250326153514 extends AbstractMigration
         $this->addSql('ALTER TABLE boards_board_steps ADD CONSTRAINT FK_2828F6DEE7EC5785 FOREIGN KEY (board_id) REFERENCES boards_board (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE boards_shared_boards ADD CONSTRAINT FK_6EB136F0E7EC5785 FOREIGN KEY (board_id) REFERENCES boards_board (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE channels_channel ADD CONSTRAINT FK_C5C46D2482D40A1F FOREIGN KEY (workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE channels_channel_member ADD CONSTRAINT FK_5B494CDF72F5A1AA FOREIGN KEY (channel_id) REFERENCES channels_channel (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE channels_channel_member ADD CONSTRAINT FK_5B494CDFA76ED395 FOREIGN KEY (user_id) REFERENCES users_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE channels_shared_channel_workspaces ADD CONSTRAINT FK_56C4F9F86E64165 FOREIGN KEY (shared_channel_id) REFERENCES channels_shared_channels (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE channels_shared_channel_workspaces ADD CONSTRAINT FK_56C4F9F86286D94E FOREIGN KEY (target_workspace_id) REFERENCES workspaces_workspace (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE channels_shared_channels ADD CONSTRAINT FK_59EAB76972F5A1AA FOREIGN KEY (channel_id) REFERENCES channels_channel (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -119,6 +124,8 @@ final class Version20250326153514 extends AbstractMigration
         $this->addSql('ALTER TABLE boards_board_steps DROP CONSTRAINT FK_2828F6DEE7EC5785');
         $this->addSql('ALTER TABLE boards_shared_boards DROP CONSTRAINT FK_6EB136F0E7EC5785');
         $this->addSql('ALTER TABLE channels_channel DROP CONSTRAINT FK_C5C46D2482D40A1F');
+        $this->addSql('ALTER TABLE channels_channel_member DROP CONSTRAINT FK_5B494CDF72F5A1AA');
+        $this->addSql('ALTER TABLE channels_channel_member DROP CONSTRAINT FK_5B494CDFA76ED395');
         $this->addSql('ALTER TABLE channels_shared_channel_workspaces DROP CONSTRAINT FK_56C4F9F86E64165');
         $this->addSql('ALTER TABLE channels_shared_channel_workspaces DROP CONSTRAINT FK_56C4F9F86286D94E');
         $this->addSql('ALTER TABLE channels_shared_channels DROP CONSTRAINT FK_59EAB76972F5A1AA');
@@ -147,6 +154,7 @@ final class Version20250326153514 extends AbstractMigration
         $this->addSql('DROP TABLE boards_board_steps');
         $this->addSql('DROP TABLE boards_shared_boards');
         $this->addSql('DROP TABLE channels_channel');
+        $this->addSql('DROP TABLE channels_channel_member');
         $this->addSql('DROP TABLE channels_shared_channel_workspaces');
         $this->addSql('DROP TABLE channels_shared_channels');
         $this->addSql('DROP TABLE messages_message');

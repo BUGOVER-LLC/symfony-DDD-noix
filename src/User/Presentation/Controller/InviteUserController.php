@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Presentation\Controller;
 
+use App\Channels\Domain\Repository\ChannelRepositoryInterface;
 use App\User\Infrastructure\DTO\InviteUserDTO;
 use App\User\Infrastructure\InviteUser\InviteUserActionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,7 @@ final class InviteUserController extends AbstractController
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly InviteUserActionInterface $inviteUserAction,
+        private readonly ChannelRepositoryInterface $repository
     )
     {
     }
@@ -32,6 +34,7 @@ final class InviteUserController extends AbstractController
         #[MapRequestPayload] InviteUserDTO $inviteUser,
     ): JsonResponse
     {
+        dd($this->repository->findAllChannelsByUserId('01JQ9HZT2F824F5PD4BDDSF19H'));
         $this->inviteUserAction->invite($inviteUser);
 
         return $this->json(
