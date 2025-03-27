@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace App\Shared\Domain\Resolver;
 
 use App\Shared\Application\Attribute\RequestBody;
-use App\Shared\Domain\Exception\RequestBodyConvertException;
-use App\Shared\Domain\Exception\ValidationException;
+use App\Shared\Infrastructure\Exception\RequestBodyConvertException;
+use App\Shared\Infrastructure\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
