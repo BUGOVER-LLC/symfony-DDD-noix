@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-/*
- * Made for YouTube channel https://www.youtube.com/@eazy-dev
- */
-
 namespace App\Shared\Domain\Resolver;
 
 use App\Shared\Application\Attribute\RequestFile;
-use App\Shared\Domain\Exception\ValidationException;
+use App\Shared\Infrastructure\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
