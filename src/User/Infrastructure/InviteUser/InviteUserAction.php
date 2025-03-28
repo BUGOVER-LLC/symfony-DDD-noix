@@ -10,8 +10,6 @@ use App\User\Infrastructure\DTO\InviteUserDTO;
 
 final class InviteUserAction implements InviteUserActionInterface
 {
-    private const string TEMPLATE = 'email.user-invitation.html';
-
     public function __construct(private readonly AdminUseCaseInteractor $adminUseCaseInteractor)
     {
     }
@@ -21,7 +19,6 @@ final class InviteUserAction implements InviteUserActionInterface
         $this->adminUseCaseInteractor->inviteUser(
             new InviteEmailCommand(
                 $payload->getEmail(),
-                self::TEMPLATE,
             )
         );
     }

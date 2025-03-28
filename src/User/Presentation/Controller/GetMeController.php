@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/v1/user/me', name: 'auth_user', methods: [Request::METHOD_GET])]
-class GetMeController extends AbstractController
+final class GetMeController extends AbstractController
 {
     public function __invoke(Security $security, UserRepository $userRepository): JsonResponse
     {
