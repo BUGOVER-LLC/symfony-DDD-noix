@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * Made for YouTube channel https://www.youtube.com/@eazy-dev
- */
-
 namespace App\Shared\Infrastructure\EventListener\Exception;
 
 use App\Shared\Application\Model\ErrorDebugDetails;
@@ -58,7 +54,10 @@ final class ApiExceptionListener
         $details = $this->isDebug ? new ErrorDebugDetails($throwable->getTraceAsString()) : null;
         $data = $this->serializer->serialize(new ErrorResponse($message, $details), JsonEncoder::FORMAT);
 
-        $event->setResponse(new JsonResponse($data, $mapping->getCode(), [], true));
+        $response = new JsonResponse($data, $mapping->getCode(), [], true);
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
+
+        $event->setResponse($response);
     }
 
     private function isSecurityException(Throwable $throwable): bool

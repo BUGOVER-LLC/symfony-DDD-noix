@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * Made for YouTube channel https://www.youtube.com/@eazy-dev
- */
-
 namespace App\Shared\Infrastructure\EventListener\Exception;
 
 use App\Shared\Application\Model\ErrorResponse;
@@ -37,7 +33,10 @@ final class ValidationExceptionListener
             JsonEncoder::FORMAT,
         );
 
-        $event->setResponse(new JsonResponse($data, Response::HTTP_BAD_REQUEST, [], true));
+        $response = new JsonResponse($data, Response::HTTP_BAD_REQUEST, [], true);
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
+
+        $event->setResponse($response);
     }
 
     private function formatViolations(ConstraintViolationListInterface $violations): ErrorValidationDetails

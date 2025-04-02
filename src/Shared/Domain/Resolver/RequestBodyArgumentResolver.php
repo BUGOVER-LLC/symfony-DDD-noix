@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * Made for YouTube channel https://www.youtube.com/@eazy-dev
- */
-
 namespace App\Shared\Domain\Resolver;
 
 use App\Shared\Application\Attribute\RequestBody;

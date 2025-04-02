@@ -17,7 +17,7 @@ use function sprintf;
 
 readonly class AuthUser implements UserFetcherInterface
 {
-    public function __construct(private readonly Security $security, private readonly TranslatorInterface $translator)
+    public function __construct(private Security $security, private TranslatorInterface $translator)
     {
     }
 
@@ -27,9 +27,9 @@ readonly class AuthUser implements UserFetcherInterface
 
         Assert::assertNotNull($user, $this->translator->trans('unauthenticated'));
         Assert::assertInstanceOf(
-            AuthUserInterface::class,
-            $user,
-            sprintf('invalid user type %s', get_class($user)),
+            expected: AuthUserInterface::class,
+            actual: $user,
+            message: sprintf('invalid user type %s', get_class($user)),
         );
 
         return $user;
@@ -45,7 +45,7 @@ readonly class AuthUser implements UserFetcherInterface
         /* @var AuthUserInterface|null $user */
         $user = $this->security->getUser();
 
-        if (is_null($user)) {
+        if (null === $user) {
             throw new AccessDeniedException('Access Denied.');
         }
 

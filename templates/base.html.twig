@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="view-transition" content="same-origin"/>
+  <title>{% block title %}Symfony Demo application{% endblock %}</title>
+  <link rel="alternate" type="application/rss+xml" title="NOIX"
+        href="#">
+  {% block stylesheets %}{% endblock %}
+  {% block javascripts %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+  {% endblock %}
+  <link rel="shortcut icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+</head>
+<body>
+<div id="base-content" style="padding: 0; margin: 0">
+  {% block body %}{% endblock %}
+</div>
+</body>
+</html>

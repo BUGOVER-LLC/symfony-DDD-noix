@@ -1,7 +1,5 @@
-# https://symfony.com/doc/current/templates.html
-# https://twig.symfony.com/doc/3.x/
-
 twig:
+  default_path: '%kernel.project_dir%/templates'
   file_name_pattern: '*.twig'
 
 when@test:
