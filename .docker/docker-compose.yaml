@@ -2,7 +2,7 @@ services:
 
   # ------------------- WEB SERVER ---------------------
   php-fpm:
-    container_name: php-fpm
+    container_name: starter-php-fpm
     build:
       context: ./../
       dockerfile: ./.docker/php-fpm/Dockerfile
@@ -19,7 +19,7 @@ services:
       - ./../:/var/www/
 
   nginx:
-    container_name: nginx
+    container_name: starter-nginx
     build:
       context: ./nginx
     ports:
@@ -33,7 +33,7 @@ services:
 
   # ------------------- DATA STORE ---------------------
   database:
-    container_name: database
+    container_name: starter-database
     build:
       context: ./database
     ports:

@@ -8,15 +8,11 @@ use App\User\Application\UseCase\PublicUseCaseInteractor;
 use App\User\Application\UseCase\Query\FindInvitationByUser\FindInvitiationByUserQuery;
 use App\User\Domain\Entity\User;
 use App\User\Infrastructure\DTO\InviteUserDTO;
-use App\User\Infrastructure\Exception\UserAlreadyHaveInvitationException;
-use Monolog\Attribute\WithMonologChannel;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[WithMonologChannel('app')]
 class UserHasAccessVoter extends Voter
 {
     public const string INVITE_USER = 'accessInvite';
@@ -26,7 +22,6 @@ class UserHasAccessVoter extends Voter
     public function __construct(
         private readonly PublicUseCaseInteractor $publicUseCaseInteractor,
         private readonly Security $security,
-        private readonly LoggerInterface $logger,
     )
     {
     }
@@ -63,9 +58,7 @@ class UserHasAccessVoter extends Voter
         );
 
         if (!$result->invitation->acceptedAt) {
-            $this->logger->alert('already have a invitation');
-
-            throw new UserAlreadyHaveInvitationException();
+            return false;
         }
 
         return true;
