@@ -6,11 +6,20 @@ namespace App\User\Infrastructure\InviteUser;
 
 use App\User\Application\UseCase\AdminUseCaseInteractor;
 use App\User\Application\UseCase\Mail\InviteEmailCommand;
+use App\User\Domain\Entity\UserInvitation;
+use App\User\Domain\Repository\UserInvitationRepositoryInterface;
 use App\User\Infrastructure\DTO\InviteUserDTO;
+use App\Workspaces\Infrastructure\Adapter\AclAdapterInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final class InviteUserAction implements InviteUserActionInterface
 {
-    public function __construct(private readonly AdminUseCaseInteractor $adminUseCaseInteractor)
+    public function __construct(
+        private readonly AdminUseCaseInteractor $adminUseCaseInteractor,
+        private UserInvitationRepositoryInterface $invitationRepository,
+        private readonly AclAdapterInterface $aclAdapter,
+        private readonly Security $security,
+    )
     {
     }
 
@@ -19,7 +28,19 @@ final class InviteUserAction implements InviteUserActionInterface
         $this->adminUseCaseInteractor->inviteUser(
             new InviteEmailCommand(
                 $payload->getEmail(),
+                $payload->getRole(),
+                $payload->getChannel(),
             )
         );
+
+        $role = $this->aclAdapter->getRoleByName($payload->getRole());
+        
+        $invitation = new UserInvitation();
+        $invitation->setEmail($payload->getEmail());
+        $invitation->setRole($role->toEntity($role->id));
+        $invitation->setWorkspace($this->security->getToken()->getUser()->getCurrentWorkspace());
+//        $invitation->setChannel($payload->getChannel());
+
+        $this->invitationRepository->add($invitation);
     }
 }

@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class InviteHasAccessVoter extends Voter implements CanCheckHasInvitingUser
 {
-    public const string INVITE_USER = 'accessInviter';
+    private const string INVITE_USER = 'accessInviter';
 
     #[\Override] protected function supports(string $attribute, mixed $subject): bool
     {

@@ -7,11 +7,13 @@ namespace App\User\Application\UseCase\Mail;
 use App\Shared\Application\Command\CommandHandlerInterface;
 use App\Shared\Domain\Service\SendEmailService;
 
-readonly class InviteEmailCommandHandler implements CommandHandlerInterface
+readonly class InviteUserCommandHandler implements CommandHandlerInterface
 {
     private const string TEMPLATE_PATH = 'email/user-invitation.html.twig';
 
-    public function __construct(private SendEmailService $emailService)
+    public function __construct(
+        private SendEmailService $emailService,
+    )
     {
     }
 

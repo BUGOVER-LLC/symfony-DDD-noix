@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Acl\Application\DTO;
 
-use App\Acl\Domain\Entity\Role;
+use App\Acl\Application\Assembler\RoleAssembler;
 
-readonly class RoleDTO
+final class RoleDTO extends RoleAssembler
 {
     public function __construct(
         public string $id,
@@ -14,10 +14,5 @@ readonly class RoleDTO
         public string $key,
     )
     {
-    }
-
-    public static function fromEntity(Role $role): static
-    {
-        return new self($role->getId(), $role->getName(), $role->getKey());
     }
 }

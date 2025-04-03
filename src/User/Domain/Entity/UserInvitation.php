@@ -11,6 +11,7 @@ use App\Shared\Domain\Service\UlidService;
 use App\Workspaces\Domain\Entity\Workspace;
 use DateTimeImmutable;
 use Random\RandomException;
+use Symfony\Component\String\ByteString;
 
 class UserInvitation
 {
@@ -36,7 +37,7 @@ class UserInvitation
     public function __construct()
     {
         $this->id = UlidService::generate();
-        $this->token = random_bytes(191);
+        $this->token = ByteString::fromRandom(191)->toString();
     }
 
     public function getChannel(): ?Channel

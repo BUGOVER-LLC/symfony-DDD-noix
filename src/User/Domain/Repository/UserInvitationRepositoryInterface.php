@@ -10,6 +10,8 @@ interface UserInvitationRepositoryInterface
 {
     /**
      * @param string $email
+     * @param string $workspaceId
+     * @param string|null $channelId
      * @return UserInvitation|null
      */
     public function findInvitationByUserId(
@@ -17,4 +19,6 @@ interface UserInvitationRepositoryInterface
         string $workspaceId,
         ?string $channelId = null
     ): ?UserInvitation;
+
+    public function add(UserInvitation $userInvitation): void;
 }

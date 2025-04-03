@@ -7,6 +7,7 @@ namespace App\User\Application\UseCase\Query\FindInvitationByUser;
 use App\Shared\Application\Query\QueryHandlerInterface;
 use App\User\Application\DTO\Assembler\UserInvitationAssembler;
 use App\User\Domain\Repository\UserInvitationRepositoryInterface;
+use RuntimeException;
 
 readonly class FindInvitiationByUserQueryHandler implements QueryHandlerInterface
 {
@@ -17,12 +18,14 @@ readonly class FindInvitiationByUserQueryHandler implements QueryHandlerInterfac
     public function __invoke(FindInvitiationByUserQuery $invitiationByUserQuery)
     {
         $result = $this->invitationRepository->findInvitationByUserId(
-            $invitiationByUserQuery->email,
-            $invitiationByUserQuery->workspaceId,
+            email: $invitiationByUserQuery->email,
+            workspaceId: $invitiationByUserQuery->workspaceId,
         );
+
         if (!$result) {
-            throw new \RuntimeException();
+            return null;
         }
+
         $invitationDTO = UserInvitationAssembler::fromEntity($result);
 
         return new FindInvitiationByUserResult($invitationDTO);
