@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Acl\Application\UseCase\Query\FindRoles;
 
+use App\Acl\Application\Assembler\RoleAssembler;
 use App\Acl\Application\DTO\RoleDTO;
 use App\Acl\Domain\Entity\Role;
 use App\Acl\Domain\Repository\RoleRepositoryInterface;
@@ -11,7 +12,7 @@ use App\Shared\Application\Query\QueryHandlerInterface;
 
 readonly class FindAllRoleByWorkspaceQueryHandler implements QueryHandlerInterface
 {
-    public function __construct(private RoleRepositoryInterface $roleRepository)
+    public function __construct(private RoleRepositoryInterface $roleRepository, private RoleAssembler $roleAssembler)
     {
     }
 
@@ -24,7 +25,7 @@ readonly class FindAllRoleByWorkspaceQueryHandler implements QueryHandlerInterfa
         $roles = $this->roleRepository->findAllRoleByWorkspace($query->workspace);
 
         return array_map(
-            callback: static fn(Role $role) => RoleDTO::fromEntity($role),
+            callback: fn(Role $role) => $this->roleAssembler->fromEntity($role),
             array: $roles
         );
     }

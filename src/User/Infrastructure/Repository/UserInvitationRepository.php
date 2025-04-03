@@ -43,4 +43,12 @@ class UserInvitationRepository extends ServiceEntityRepository implements UserIn
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    #[\Override] public function add(UserInvitation $userInvitation): void
+    {
+        $manager = $this->getEntityManager();
+
+        $manager->persist($userInvitation);
+        $manager->flush();
+    }
 }

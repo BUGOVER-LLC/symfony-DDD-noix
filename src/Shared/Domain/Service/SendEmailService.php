@@ -24,7 +24,8 @@ class SendEmailService
     {
         $this->emailInstance = (new Email())
             ->from(new Address($email))
-            ->to($email);
+            ->to($email)
+            ->text('TODO');
 
         return $this;
     }

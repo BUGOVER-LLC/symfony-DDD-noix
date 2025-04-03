@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserHasAccessVoter extends Voter
 {
-    public const string INVITE_USER = 'accessInvite';
+    private const string INVITE_USER = 'accessInvite';
 
     private User|UserInterface $user;
 
@@ -57,7 +57,7 @@ class UserHasAccessVoter extends Voter
             )
         );
 
-        if (!$result->invitation->acceptedAt) {
+        if ($result->invitation->acceptedAt) {
             return false;
         }
 

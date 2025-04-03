@@ -37,4 +37,14 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
             ->getQuery()
             ->getResult();
     }
+
+    #[\Override] public function findByName(string $name): ?Role
+    {
+        return $this->findOneBy(['name' => $name]);
+    }
+
+    #[\Override] public function findByKey(string $key): ?Role
+    {
+        return $this->findOneBy(['key' => $key]);
+    }
 }

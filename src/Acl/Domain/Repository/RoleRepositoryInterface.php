@@ -15,4 +15,12 @@ interface RoleRepositoryInterface
      * @return array<Role>
      */
     public function findAllRoleByWorkspace(string $workspace): array;
+
+    /**
+     * @param string $name
+     * @return Role|null
+     */
+    public function findByName(string $name): ?Role;
+
+    public function findByKey(string $key): ?Role;
 }

@@ -7,12 +7,14 @@ namespace App\User\Application\UseCase\Mail;
 use App\Shared\Application\Command\Command;
 
 /**
- * @link InviteEmailCommandHandler
+ * @link InviteUserCommandHandler
  */
 readonly class InviteEmailCommand extends Command
 {
     public function __construct(
         public string $from,
+        public string $role,
+        public ?string $channel = null,
     )
     {
     }
