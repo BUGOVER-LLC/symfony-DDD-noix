@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Security;
 
+use _PHPStan_f2f2ddf44\Symfony\Component\Finder\Exception\AccessDeniedException;
 use App\User\Application\UseCase\PublicUseCaseInteractor;
 use App\User\Application\UseCase\Query\FindInvitationByUser\FindInvitiationByUserQuery;
 use App\User\Domain\Entity\User;
@@ -26,6 +27,14 @@ class UserHasAccessVoter extends Voter
     {
     }
 
+    /**
+     * Determines if the attribute and subject are supported by this voter.
+     *
+     * @param mixed $subject The subject to secure, e.g. an object the user wants to access or any other PHP type
+     *
+     * @psalm-assert-if-true TSubject $subject
+     * @psalm-assert-if-true TAttribute $attribute
+     */
     #[\Override] protected function supports(string $attribute, mixed $subject): bool
     {
         $this->user = $this->security->getUser();
@@ -45,20 +54,22 @@ class UserHasAccessVoter extends Voter
      * Perform a single access check operation on a given attribute, subject and token.
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
-     * @param TAttribute $attribute
+     * @param string $attribute
      * @param InviteUserDTO $subject
+     * @param TokenInterface $token
+     * @return bool
      */
     #[\Override] protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $result = $this->publicUseCaseInteractor->findInvitationByEmail(
-            new FindInvitiationByUserQuery(
-                $subject->getEmail(),
-                $this->user?->getCurrentWorkspace()?->getId(),
+        $invitation = $this->publicUseCaseInteractor->findInvitationByEmail(
+            query: new FindInvitiationByUserQuery(
+                email: $subject->getEmail(),
+                workspaceId: $this->user->getCurrentWorkspace()?->getId(),
             )
         );
 
-        if ($result->invitation->acceptedAt) {
-            return false;
+        if ($invitation?->invitation?->acceptedAt) {
+            throw new AccessDeniedException();
         }
 
         return true;

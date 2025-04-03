@@ -21,7 +21,7 @@ readonly class PublicUseCaseInteractor
         return $this->queryBus->execute($query);
     }
 
-    public function findInvitationByEmail(FindInvitiationByUserQuery $query): FindInvitiationByUserResult
+    public function findInvitationByEmail(FindInvitiationByUserQuery $query): ?FindInvitiationByUserResult
     {
         return $this->queryBus->execute($query);
     }
