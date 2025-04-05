@@ -23,8 +23,7 @@ class UserHasAccessVoter extends Voter
     public function __construct(
         private readonly PublicUseCaseInteractor $publicUseCaseInteractor,
         private readonly Security $security,
-    )
-    {
+    ) {
     }
 
     /**

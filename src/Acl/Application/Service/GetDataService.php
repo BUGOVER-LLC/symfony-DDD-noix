@@ -21,8 +21,8 @@ final readonly class GetDataService
     public function getRoles(): array
     {
         return $this->queryInteractor->findAllRolesQuery(
-            new FindAllRoleByWorkspaceQuery(
-                $this->security->getToken()->getUser()->getCurrentWorkspace()->getId()
+            findAllRoleByWorkspaceQuery: new FindAllRoleByWorkspaceQuery(
+                workspace: $this->security->getToken()->getUser()->getCurrentWorkspace()->getId(),
             )
         );
     }

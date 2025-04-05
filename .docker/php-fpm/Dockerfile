@@ -61,6 +61,7 @@ RUN pecl channel-update pecl.php.net && pecl install -o -f \
     igbinary \
     mongodb \
     event \
+    apcu \
     rdkafka
 
 RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/rdkafka.ini && echo "extension=event.so" >/usr/local/etc/php/conf.d/event.ini

@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRepositoryInterface
 {
+    private const string CACHE_KEY = 'workspace-';
     private array $entities = [];
 
     public function __construct(ManagerRegistry $registry)
@@ -40,7 +41,7 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
         unset($this->entities[$workspace->getId()]);
     }
 
-    #[\Override] public function findAllWorkspacesByUserId(int $userId): ?Workspace
+    #[\Override] public function findAllWorkspacesByUserId(string $userId): ?Workspace
     {
         return $this
             ->createQueryBuilder('w')
@@ -48,6 +49,7 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
             ->innerJoin('w.workers', 'workers', 'WITH', 'workers.user_id = :user_id')
             ->setParameter('user_id', $userId)
             ->getQuery()
+            ->enableResultCache(3600, self::CACHE_KEY.$userId)
             ->getSingleResult();
     }
 
