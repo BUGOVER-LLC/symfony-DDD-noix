@@ -62,4 +62,14 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
         $qb->setParameter('workspaceId', $workspace->getId());
         $qb->getQuery()->execute();
     }
+
+    #[\Override] public function decrementWorkerCount(Workspace $workspace): void
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->where('w.id = :workspaceId');
+        $qb->update();
+        $qb->set('w.membersCount', 'w.membersCount - 1');
+        $qb->setParameter('workspaceId', $workspace->getId());
+        $qb->getQuery()->execute();
+    }
 }

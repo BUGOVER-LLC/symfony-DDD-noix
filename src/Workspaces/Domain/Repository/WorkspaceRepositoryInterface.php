@@ -15,4 +15,6 @@ interface WorkspaceRepositoryInterface
     public function findAllWorkspacesByUserId(string $userId): ?Workspace;
 
     public function incrementWorkerCount(Workspace $workspace): void;
+
+    public function decrementWorkerCount(Workspace $workspace): void;
 }
