@@ -73,8 +73,8 @@ RUN if [ ${ENABLE_XDEBUG} = true ]; then \
     docker-php-ext-enable xdebug; \
 fi
 
-COPY ./.docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-COPY ./.docker/php-fpm/apcu.ini /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+COPY ./.docker/php-fpm/ext/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY ./.docker/php-fpm/ext/apcu.ini /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
 
 RUN docker-php-ext-enable \
     yaml \
