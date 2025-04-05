@@ -64,7 +64,8 @@ RUN pecl channel-update pecl.php.net && pecl install -o -f \
     apcu \
     rdkafka
 
-RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/rdkafka.ini && echo "extension=event.so" >/usr/local/etc/php/conf.d/event.ini
+RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/docker-php-ext-rdkafka.ini
+RUN echo "extension=event.so" >/usr/local/etc/php/conf.d/docker-php-ext-event.ini
 
 # Xdebug
 ARG ENABLE_XDEBUG
@@ -72,15 +73,17 @@ RUN if [ ${ENABLE_XDEBUG} = true ]; then \
     docker-php-ext-enable xdebug; \
 fi
 
+COPY ./.docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY ./.docker/php-fpm/apcu.ini /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+
 RUN docker-php-ext-enable \
     yaml \
     igbinary \
     mongodb \
+    event \
+    apcu \
+    rdkafka \
     redis
-
-COPY ./.docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-RUN docker-php-ext-enable redis
 
 # Configure non-root user.
 ARG PUID=1000

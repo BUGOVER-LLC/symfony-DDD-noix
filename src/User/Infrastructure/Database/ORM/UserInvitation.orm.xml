@@ -11,7 +11,7 @@
             <generator strategy="NONE"/>
         </id>
 
-        <field name="email" length="191" unique="true"/>
+        <field name="email" length="191"/>
         <field name="token" length="191" unique="true"/>
 
         <one-to-one field="role" target-entity="App\Acl\Domain\Entity\Role"/>

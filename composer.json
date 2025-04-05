@@ -78,6 +78,7 @@
     }
   },
   "replace": {
+    "symfony/polyfill-apcu": "*",
     "symfony/polyfill-ctype": "*",
     "symfony/polyfill-iconv": "*",
     "symfony/polyfill-php72": "*",
