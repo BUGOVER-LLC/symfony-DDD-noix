@@ -6,6 +6,7 @@ namespace App\User\Application\UseCase;
 
 use App\Shared\Application\Command\CommandBusInterface;
 use App\User\Application\UseCase\Command\CreateUser\CreateUserCommand;
+use App\User\Application\UseCase\Command\SetCurrentWorkspace\SetCurrentWorkspaceCommand;
 use App\User\Application\UseCase\Mail\InviteEmailCommand;
 
 readonly class AdminUseCaseInteractor
@@ -20,6 +21,11 @@ readonly class AdminUseCaseInteractor
     }
 
     public function inviteUser(InviteEmailCommand $command)
+    {
+        $this->commandBus->execute($command);
+    }
+
+    public function setCurrentWorkspace(SetCurrentWorkspaceCommand $command)
     {
         $this->commandBus->execute($command);
     }

@@ -15,4 +15,6 @@ interface UserRepositoryInterface
     public function findByEmail(string $email): ?User;
 
     public function roleByCurrentWorkspace(string $userId);
+
+    public function setCurrentWorkspace(string $userId, string $workspaceId): void;
 }

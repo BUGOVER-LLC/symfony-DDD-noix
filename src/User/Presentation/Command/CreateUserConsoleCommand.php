@@ -7,6 +7,7 @@ namespace App\User\Presentation\Command;
 use App\Shared\Domain\Security\Role;
 use App\User\Application\UseCase\AdminUseCaseInteractor;
 use App\User\Application\UseCase\Command\CreateUser\CreateUserCommand;
+use App\User\Application\UseCase\Command\SetCurrentWorkspace\SetCurrentWorkspaceCommand;
 use App\User\Infrastructure\Adapter\WorkspaceAdapter;
 use App\Workspaces\Application\UseCase\DTO\WorkspaceDTO;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -85,7 +86,7 @@ class CreateUserConsoleCommand extends Command
         );
 
         if (!$choise) {
-            // @TODO CONTINUED
+//            $this->adminCommandInteractor->setCurrentWorkspace(new SetCurrentWorkspaceCommand($userId, $workspaceId));
         }
     }
 }
