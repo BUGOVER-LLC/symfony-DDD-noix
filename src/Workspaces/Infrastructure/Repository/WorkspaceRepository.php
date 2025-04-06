@@ -41,16 +41,15 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
         unset($this->entities[$workspace->getId()]);
     }
 
-    #[\Override] public function findAllWorkspacesByUserId(string $userId): ?Workspace
+    #[\Override] public function findAllWorkspacesByUserId(string $userId): array
     {
         return $this
             ->createQueryBuilder('w')
-            ->select('*')
-            ->innerJoin('w.workers', 'workers', 'WITH', 'workers.user_id = :user_id')
+            ->innerJoin('w.workers', 'workers', 'WITH', 'workers.user = :user_id')
             ->setParameter('user_id', $userId)
             ->getQuery()
             ->enableResultCache(3600, self::CACHE_KEY.$userId)
-            ->getSingleResult();
+            ->getResult();
     }
 
     #[\Override] public function incrementWorkerCount(Workspace $workspace): void

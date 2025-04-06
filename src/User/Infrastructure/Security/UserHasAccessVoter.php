@@ -38,7 +38,7 @@ class UserHasAccessVoter extends Voter
     {
         $this->user = $this->security->getUser();
 
-        if (!$this->user->getCurrentWorkspace()?->getId()) {
+        if (!$this->user->getCurrentWorkspace()) {
             return false;
         }
 

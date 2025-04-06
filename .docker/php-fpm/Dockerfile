@@ -69,9 +69,10 @@ RUN echo "extension=event.so" >/usr/local/etc/php/conf.d/docker-php-ext-event.in
 
 # Xdebug
 ARG ENABLE_XDEBUG
-RUN if [ ${ENABLE_XDEBUG} = true ]; then \
-    docker-php-ext-enable xdebug; \
-fi
+RUN if [ ${ENABLE_XDEBUG} = true ]; \
+    then \
+      docker-php-ext-enable xdebug; \
+    fi;
 
 COPY ./.docker/php-fpm/ext/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY ./.docker/php-fpm/ext/apcu.ini /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
@@ -103,3 +104,5 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 CMD php-fpm
 
 EXPOSE 9000
+
+#CMD ["/bin/sh", ".docker/php-fpm/supervisord/run.sh"]

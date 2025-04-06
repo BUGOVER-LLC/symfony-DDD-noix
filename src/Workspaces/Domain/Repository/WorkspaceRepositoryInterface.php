@@ -12,7 +12,11 @@ interface WorkspaceRepositoryInterface
 
     public function delete(Workspace $workspace): void;
 
-    public function findAllWorkspacesByUserId(string $userId): ?Workspace;
+    /**
+     * @param string $userId
+     * @return Workspace[]
+     */
+    public function findAllWorkspacesByUserId(string $userId): array;
 
     public function incrementWorkerCount(Workspace $workspace): void;
 
