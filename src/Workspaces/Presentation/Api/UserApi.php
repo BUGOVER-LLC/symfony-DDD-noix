@@ -6,6 +6,7 @@ namespace App\Workspaces\Presentation\Api;
 
 use App\User\Infrastructure\Adapter\WorkspaceAdapter;
 use App\Workspaces\Application\UseCase\Query\FindWorkspaceByUser\FindWorkspaceByUserQuery;
+use App\Workspaces\Application\UseCase\Query\FindWorkspaceByUserEmail\FindWorkspaceByUserEmailQuery;
 use App\Workspaces\Application\UseCase\QueryUseCaseInteractor;
 
 class UserApi implements WorkspaceAdapter
@@ -17,5 +18,10 @@ class UserApi implements WorkspaceAdapter
     public function getWorkspacesByUserId(string $userId): array
     {
         return $this->queryInteractor->findWorkspacesByUser(new FindWorkspaceByUserQuery($userId));
+    }
+
+    public function getWorkspacesByEmail(string $email): array
+    {
+        return $this->queryInteractor->findWorkspacesByUserEmail(new FindWorkspaceByUserEmailQuery($email));
     }
 }

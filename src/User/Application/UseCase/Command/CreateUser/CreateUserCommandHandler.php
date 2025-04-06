@@ -19,7 +19,10 @@ readonly class CreateUserCommandHandler implements CommandHandlerInterface
      */
     public function __invoke(CreateUserCommand $createUserCommand): string
     {
-        $user = $this->userFactory->create($createUserCommand->email, $createUserCommand->password);
+        $user = $this->userFactory->create(
+            email: $createUserCommand->email,
+            password: $createUserCommand->password
+        );
         $this->userRepository->add($user);
 
         return $user->getId();

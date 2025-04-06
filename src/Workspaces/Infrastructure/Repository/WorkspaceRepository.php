@@ -7,6 +7,7 @@ namespace App\Workspaces\Infrastructure\Repository;
 use App\Workspaces\Domain\Entity\Workspace;
 use App\Workspaces\Domain\Repository\WorkspaceRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRepositoryInterface
@@ -70,5 +71,17 @@ class WorkspaceRepository extends ServiceEntityRepository implements WorkspaceRe
         $qb->set('w.membersCount', 'w.membersCount - 1');
         $qb->setParameter('workspaceId', $workspace->getId());
         $qb->getQuery()->execute();
+    }
+
+    public function findAllWorkspacesByUserEmail(string $email): array
+    {
+        $qb = $this->createQueryBuilder('w');
+
+        return $qb
+            ->innerJoin('w.workers', 'workers', Join::WITH)
+            ->innerJoin('workers.user', 'user', Join::WITH, 'user.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -8,8 +8,16 @@ use App\Workspaces\Domain\Entity\Workspace;
 
 interface WorkspaceRepositoryInterface
 {
+    /**
+     * @param Workspace $workspace
+     * @return void
+     */
     public function add(Workspace $workspace): void;
 
+    /**
+     * @param Workspace $workspace
+     * @return void
+     */
     public function delete(Workspace $workspace): void;
 
     /**
@@ -18,7 +26,21 @@ interface WorkspaceRepositoryInterface
      */
     public function findAllWorkspacesByUserId(string $userId): array;
 
+    /**
+     * @param Workspace $workspace
+     * @return void
+     */
     public function incrementWorkerCount(Workspace $workspace): void;
 
+    /**
+     * @param Workspace $workspace
+     * @return void
+     */
     public function decrementWorkerCount(Workspace $workspace): void;
+
+    /**
+     * @param string $email
+     * @return Workspace[]
+     */
+    public function findAllWorkspacesByUserEmail(string $email): array;
 }
