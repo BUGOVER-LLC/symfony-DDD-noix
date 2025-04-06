@@ -35,7 +35,13 @@ RUN apk update \
         libpq-dev \
         libxml2-dev \
         librdkafka-dev \
-        bash
+        bash \
+        supervisor \
+        php83-ctype \
+        php83-dom \
+        php83-cli \
+        php83-xmlreader \
+        php83-xmlwriter
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
@@ -54,18 +60,18 @@ RUN docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) \
     zip
 
 # Pecl packages
-RUN pecl channel-update pecl.php.net && pecl install -o -f \
+RUN pecl channel-update pecl.php.net && pecl install \
     xdebug \
     redis \
     yaml \
     igbinary \
     mongodb \
-    event \
     apcu \
     rdkafka
+#    event
 
 RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/docker-php-ext-rdkafka.ini
-RUN echo "extension=event.so" >/usr/local/etc/php/conf.d/docker-php-ext-event.ini
+RUN #echo "extension=event.so" >/usr/local/etc/php/conf.d/docker-php-ext-event.ini
 
 # Xdebug
 ARG ENABLE_XDEBUG
@@ -81,10 +87,10 @@ RUN docker-php-ext-enable \
     yaml \
     igbinary \
     mongodb \
-    event \
     apcu \
     rdkafka \
     redis
+#    event
 
 # Configure non-root user.
 ARG PUID=1000
