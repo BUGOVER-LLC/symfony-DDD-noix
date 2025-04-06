@@ -6,7 +6,7 @@ namespace App\Workspaces\Domain\Entity;
 
 use App\Channels\Domain\Entity\Channel;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
-use App\Shared\Domain\Security\Role;
+use App\Acl\Domain\Security\Role;
 use App\Shared\Domain\Service\UlidService;
 use App\User\Domain\Entity\User;
 

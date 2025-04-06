@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Presentation\Command;
 
-use App\Shared\Domain\Security\Role;
+use App\Acl\Domain\Security\Role;
 use App\User\Application\DTO\UserDto;
 use App\User\Application\UseCase\AdminUseCaseInteractor;
 use App\User\Application\UseCase\Command\CreateUser\CreateUserCommand;
