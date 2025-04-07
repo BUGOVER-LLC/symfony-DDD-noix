@@ -20,6 +20,8 @@ class User implements AuthUserInterface
 
     private string $id;
 
+    private ?string $googleId = null;
+
     private string $email;
 
     private ?string $phone;
@@ -155,5 +157,15 @@ class User implements AuthUserInterface
         $this->phone = $phone;
 
         return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): void
+    {
+        $this->googleId = $googleId;
     }
 }
