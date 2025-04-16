@@ -21,6 +21,9 @@ $rules = [
         'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
     ],
     'braces' => true,
+    'braces_position' => [
+        'functions_opening_brace' => 'next_line_unless_newline_at_signature_end',
+    ],
     'cast_spaces' => true,
     'class_attributes_separation' => [
         'elements' => [

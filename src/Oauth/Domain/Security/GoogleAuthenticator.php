@@ -9,6 +9,7 @@ use App\User\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +27,9 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
         private readonly ClientRegistry $clientRegistry,
         private readonly EntityManagerInterface $em,
         private readonly RouterInterface $router,
-        private readonly UserRepositoryInterface $userRepository
-    )
-    {
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly LoggerInterface $logger,
+    ) {
     }
 
     public function start(Request $request, ?AuthenticationException $authException = null): Response
@@ -50,7 +51,7 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 $googleUser = $client->fetchUserFromToken($accessToken);
 
-                $user = $this->userRepository->findOneBy(['googleId' => $googleUser->getId()]);
+                $user = $this->userRepository->findOneBy(['google_id' => $googleUser->getId()]);
 
                 if (null === $user) {
                     $user = new User();
@@ -68,11 +69,11 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // TODO: Implement onAuthenticationSuccess() method.
+        $this->logger->info('OAUTH GOOGLE');
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        dd($request->getContent());
+        return new Response($exception->getMessage());
     }
 }

@@ -11,7 +11,7 @@ services:
         - PGID=${PGID}
         - ENABLE_XDEBUG=${ENABLE_XDEBUG}
     environment:
-#      - PHP_IDE_CONFIG="serverName=Docker"
+      #      - PHP_IDE_CONFIG="serverName=Docker"
       - DATABASE_URL="postgresql://symfony:symfony@database/symfony?serverVersion=17&charset=utf8"
     networks:
       - dddapp
