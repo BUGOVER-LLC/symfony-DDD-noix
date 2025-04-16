@@ -79,6 +79,7 @@ services:
     tags:
       - { name: doctrine.event_subscriber }
 
+  # Exception
   App\Shared\Domain\Resolver\ExceptionMappingResolver:
     arguments: [ '%exceptions%' ]
 
