@@ -12,6 +12,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class RoleRepository extends ServiceEntityRepository implements RoleRepositoryInterface
 {
+    private const string CACHE_KEY = 'role-';
+
     private array $entities;
 
     public function __construct(ManagerRegistry $registry)
@@ -26,15 +28,16 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
         $this->entities[$role->getId()] = $role;
     }
 
-    #[\Override] public function findAllRoleByWorkspace(string $workspace): array
+    #[\Override] public function findAllRoleByWorkspace(string $workspaceId): array
     {
         $query = $this->createQueryBuilder('r');
 
         return $query
             ->innerJoin(Workspace::class, 'w', 'WITH', 'w.id = :workspace')
             ->where('w.id = :workspace')
-            ->setParameter('workspace', $workspace)
+            ->setParameter('workspace', $workspaceId)
             ->getQuery()
+            ->enableResultCache(3600, self::CACHE_KEY.$workspaceId)
             ->getResult();
     }
 

@@ -29,3 +29,7 @@ workspace:
 acl:
   resource: ../src/Acl/Presentation/Controller/
   type: attribute
+
+oauth:
+  resource: ../src/Oauth/Presentation/Controller/
+  type: attribute

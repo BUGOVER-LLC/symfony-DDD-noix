@@ -37,12 +37,25 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 
     #[\Override] public function roleByCurrentWorkspace(string $userId): ?User
     {
-        return $this
-            ->createQueryBuilder('u')
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
             ->leftJoin(UserProfile::class, 'up', Join::WITH, 'u.id = up.user')
             ->where('u.currentWorkspace = up.workspace and u.id = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
             ->getSingleResult();
+    }
+
+    public function setCurrentWorkspace(string $userId, string $workspaceId): void
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->update(User::class, 'u')
+            ->set('u.currentWorkspace', ':workspaceId')
+            ->setParameter('workspaceId', $workspaceId)
+            ->getQuery()
+            ->execute();
     }
 }

@@ -5,23 +5,29 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.3",
+    "ext-apcu": "*",
     "ext-ctype": "*",
     "ext-iconv": "*",
     "ext-rdkafka": "*",
+    "aws/aws-sdk-php": "^3",
     "doctrine/dbal": "^4",
-    "doctrine/doctrine-bundle": "^2.13",
+    "doctrine/doctrine-bundle": "^2.14",
     "doctrine/doctrine-migrations-bundle": "^3.4",
     "doctrine/orm": "^3.3",
     "gesdinet/jwt-refresh-token-bundle": "^1.4",
-    "kafkiansky/symfony-middleware": "^1.0.0",
+    "kafkiansky/symfony-middleware": "^1.0",
+    "knpuniversity/oauth2-client-bundle": "^2.18",
+    "league/oauth2-google": "^4.0",
     "lexik/jwt-authentication-bundle": "^3.1",
     "nelmio/api-doc-bundle": "^5.0",
     "symfony/asset": "7.2.*",
+    "symfony/cache": "7.2.*",
     "symfony/console": "7.2.*",
     "symfony/dotenv": "7.2.*",
     "symfony/flex": "^2",
     "symfony/framework-bundle": "7.2.*",
     "symfony/mailer": "7.2.*",
+    "symfony/mercure-bundle": "^0.3",
     "symfony/messenger": "7.2.*",
     "symfony/mime": "7.2.*",
     "symfony/monolog-bundle": "^3.10",
@@ -77,6 +83,7 @@
     }
   },
   "replace": {
+    "symfony/polyfill-apcu": "*",
     "symfony/polyfill-ctype": "*",
     "symfony/polyfill-iconv": "*",
     "symfony/polyfill-php72": "*",
@@ -104,7 +111,7 @@
   },
   "extra": {
     "symfony": {
-      "allow-contrib": false,
+      "allow-contrib": "true",
       "require": "7.2.*"
     }
   }

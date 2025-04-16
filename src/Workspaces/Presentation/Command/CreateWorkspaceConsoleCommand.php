@@ -38,7 +38,6 @@ final class CreateWorkspaceConsoleCommand extends Command
             return $input;
         });
 
-        /* @var PlanDTO[] $plans */
         $plans = $this->aclAdapter->getPlans();
         $choisedPlan = $this->chooseFindPlan($io, $plans);
 

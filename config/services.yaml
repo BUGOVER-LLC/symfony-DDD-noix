@@ -17,6 +17,12 @@ services:
     bind:
       bool $isDebug: '%kernel.debug%'
 
+  doctrine.system_cache_provider:
+    class: Symfony\Component\Cache\Adapter\ApcuAdapter
+
+  doctrine.result_cache_provider:
+    class: Symfony\Component\Cache\Adapter\ApcuAdapter
+
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
   App\:
@@ -73,6 +79,7 @@ services:
     tags:
       - { name: doctrine.event_subscriber }
 
+  # Exception
   App\Shared\Domain\Resolver\ExceptionMappingResolver:
     arguments: [ '%exceptions%' ]
 

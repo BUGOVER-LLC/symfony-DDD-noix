@@ -23,8 +23,7 @@ class UserHasAccessVoter extends Voter
     public function __construct(
         private readonly PublicUseCaseInteractor $publicUseCaseInteractor,
         private readonly Security $security,
-    )
-    {
+    ) {
     }
 
     /**
@@ -39,7 +38,7 @@ class UserHasAccessVoter extends Voter
     {
         $this->user = $this->security->getUser();
 
-        if (!$this->user->getCurrentWorkspace()?->getId()) {
+        if (!$this->user->getCurrentWorkspace()) {
             return false;
         }
 

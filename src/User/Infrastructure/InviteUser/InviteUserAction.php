@@ -10,6 +10,7 @@ use App\User\Domain\Entity\UserInvitation;
 use App\User\Domain\Repository\UserInvitationRepositoryInterface;
 use App\User\Infrastructure\DTO\InviteUserDTO;
 use App\Workspaces\Infrastructure\Adapter\AclAdapterInterface;
+use Override;
 use Symfony\Bundle\SecurityBundle\Security;
 
 final class InviteUserAction implements InviteUserActionInterface
@@ -23,18 +24,16 @@ final class InviteUserAction implements InviteUserActionInterface
     {
     }
 
-    #[\Override] public function invite(InviteUserDTO $payload)
+    #[Override] public function invite(InviteUserDTO $payload)
     {
         $this->adminUseCaseInteractor->inviteUser(
-            new InviteEmailCommand(
-                $payload->getEmail(),
-                $payload->getRole(),
-                $payload->getChannel(),
+            command: new InviteEmailCommand(
+                from: $payload->getEmail(), role: $payload->getRole(), channel: $payload->getChannel(),
             )
         );
 
         $role = $this->aclAdapter->getRoleByName($payload->getRole());
-        
+
         $invitation = new UserInvitation();
         $invitation->setEmail($payload->getEmail());
         $invitation->setRole($role->toEntity($role->id));

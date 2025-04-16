@@ -35,7 +35,13 @@ RUN apk update \
         libpq-dev \
         libxml2-dev \
         librdkafka-dev \
-        bash
+        bash \
+        supervisor \
+        php83-ctype \
+        php83-dom \
+        php83-cli \
+        php83-xmlreader \
+        php83-xmlwriter
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
@@ -54,32 +60,37 @@ RUN docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) \
     zip
 
 # Pecl packages
-RUN pecl channel-update pecl.php.net && pecl install -o -f \
+RUN pecl channel-update pecl.php.net && pecl install \
     xdebug \
     redis \
     yaml \
     igbinary \
     mongodb \
-    event \
+    apcu \
     rdkafka
-
-RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/rdkafka.ini && echo "extension=event.so" >/usr/local/etc/php/conf.d/event.ini
-
-# Xdebug
-ARG ENABLE_XDEBUG
-RUN if [ ${ENABLE_XDEBUG} = true ]; then \
-    docker-php-ext-enable xdebug; \
-fi
+#    event
 
 RUN docker-php-ext-enable \
     yaml \
     igbinary \
     mongodb \
+    apcu \
+    rdkafka \
     redis
+#    event
 
-COPY ./.docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "extension=rdkafka.so" >/usr/local/etc/php/conf.d/docker-php-ext-rdkafka.ini
+RUN #echo "extension=event.so" >/usr/local/etc/php/conf.d/docker-php-ext-event.ini
 
-RUN docker-php-ext-enable redis
+# Xdebug
+ARG ENABLE_XDEBUG
+RUN if [ ${ENABLE_XDEBUG} = true ]; \
+    then \
+      docker-php-ext-enable xdebug; \
+    fi;
+
+COPY ./.docker/php-fpm/ext/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY ./.docker/php-fpm/ext/apcu.ini /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
 
 # Configure non-root user.
 ARG PUID=1000
@@ -99,3 +110,5 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 CMD php-fpm
 
 EXPOSE 9000
+
+#CMD ["/bin/sh", ".docker/php-fpm/supervisord/run.sh"]
