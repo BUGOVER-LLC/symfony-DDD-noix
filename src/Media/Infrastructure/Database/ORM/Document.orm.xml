@@ -11,17 +11,6 @@
             <generator strategy="NONE"/>
         </id>
 
-        <field name="name" length="191"/>
-        <field name="originalName" column="original_name" length="500"/>
-        <field name="extension" length="7"/>
-        <field name="size" type="smallint"/>
-        <field name="originalSize" column="original_size" type="smallint"/>
-        <field name="fullPath" column="full_path" length="191"/>
-        <field name="bucket" enum-type="bucket_type"/>
-
-        <many-to-one field="message" target-entity="App\Messages\Domain\Entity\Message"/>
-        <many-to-one field="channel" target-entity="App\Channels\Domain\Entity\Channel"/>
-
         <field name="createdAt" column="created_at" type="datetime_immutable"/>
         <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
         <lifecycle-callbacks>

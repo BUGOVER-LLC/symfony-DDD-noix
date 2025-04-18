@@ -11,6 +11,7 @@
             <generator strategy="NONE"/>
         </id>
 
+        <field name="googleId" column="google_id" length="191" unique="true" nullable="true"/>
         <field name="email" length="191" unique="true"/>
         <field name="phone" length="19" nullable="true"/>
         <field name="password" length="255" nullable="true"/>
