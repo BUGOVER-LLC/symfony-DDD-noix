@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/oauth-google/connect/login', name: 'google_connect_login')]
+#[Route(path: '/oauth-google/login', name: 'google_connect_login')]
 final class GoogleConnectCheckController extends AbstractController
 {
     public function __invoke(Request $request, ClientRegistry $clientRegistry, LoggerInterface $logger)

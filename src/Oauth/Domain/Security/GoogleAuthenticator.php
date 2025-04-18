@@ -8,7 +8,9 @@ use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use League\OAuth2\Client\Provider\GoogleUser;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +31,8 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
         private readonly RouterInterface $router,
         private readonly UserRepositoryInterface $userRepository,
         private readonly LoggerInterface $logger,
-    ) {
+    )
+    {
     }
 
     public function start(Request $request, ?AuthenticationException $authException = null): Response
@@ -49,18 +52,18 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
 
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
+                /* @var GoogleUser $googleUser */
                 $googleUser = $client->fetchUserFromToken($accessToken);
-
                 $user = $this->userRepository->findOneBy(['google_id' => $googleUser->getId()]);
 
                 if (null === $user) {
                     $user = new User();
-                    $user->setGoogleId($googleUser->getId());
+                    $user->setGoogleId($googleUser->getEmail());
+                    $user->setEmail($googleUser->getId());
 
                     $this->em->persist($user);
+                    $this->em->flush();
                 }
-
-                $this->em->flush();
 
                 return $user;
             })
@@ -70,10 +73,14 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $this->logger->info('OAUTH GOOGLE');
+
+        return new Response();
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
+        $this->logger->info($exception->getMessage());
+
         return new Response($exception->getMessage());
     }
 }

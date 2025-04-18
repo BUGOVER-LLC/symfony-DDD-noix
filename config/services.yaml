@@ -47,25 +47,25 @@ services:
       public: true
 
   # Domains controllers
-#  App\Shared\Presentation\Controller\:
-#    resource: ../src/Shared/Presentation/Controller/
-#    tags: [ 'controller.service_arguments' ]
-#
-#  App\User\Presentation\Controller\:
-#    resource: ../src/User/Presentation/Controller/
-#    tags: [ 'controller.service_arguments' ]
-#
-#  App\Channels\Presentation\Controller\:
-#    resource: ../src/Channels/Presentation/Controller/
-#    tags: [ 'controller.service_arguments' ]
-#
-#  App\Workspaces\Presentation\Controller\:
-#    resource: ../src/Workspaces/Presentation/Controller/
-#    tags: [ 'controller.service_arguments' ]
-#
-#  App\Acl\Presentation\Controller\:
-#    resource: ../src/Acl/Presentation/Controller/
-#    tags: [ 'controller.service_arguments' ]
+  #  App\Shared\Presentation\Controller\:
+  #    resource: ../src/Shared/Presentation/Controller/
+  #    tags: [ 'controller.service_arguments' ]
+  #
+  #  App\User\Presentation\Controller\:
+  #    resource: ../src/User/Presentation/Controller/
+  #    tags: [ 'controller.service_arguments' ]
+  #
+  #  App\Channels\Presentation\Controller\:
+  #    resource: ../src/Channels/Presentation/Controller/
+  #    tags: [ 'controller.service_arguments' ]
+  #
+  #  App\Workspaces\Presentation\Controller\:
+  #    resource: ../src/Workspaces/Presentation/Controller/
+  #    tags: [ 'controller.service_arguments' ]
+  #
+  #  App\Acl\Presentation\Controller\:
+  #    resource: ../src/Acl/Presentation/Controller/
+  #    tags: [ 'controller.service_arguments' ]
 
   # Listeners
   acme_api.event.jwt_created_listener:

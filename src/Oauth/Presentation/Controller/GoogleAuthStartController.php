@@ -17,6 +17,8 @@ final class GoogleAuthStartController extends AbstractController
     {
         $logger->alert('OAUTH CUSTOM AUTH START');
 
-        return $clientRegistry->getClient('google')->redirect();
+        return $clientRegistry
+            ->getClient('google')
+            ->redirect();
     }
 }
