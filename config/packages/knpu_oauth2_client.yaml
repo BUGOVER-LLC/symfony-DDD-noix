@@ -7,11 +7,11 @@ knpu_oauth2_client:
       client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'
       client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
       # a route name you'll create
-      redirect_route: google_auth_start
-      #      redirect_params:
-      #        service: google
-      #      provider_class: App\Oauth\Domain\Security\UserProvider
-      #      client_class: App\Oauth\Domain\Security\GoogleAuthenticator
+      redirect_route: google_auth_login
+        #      redirect_params:
+        #        service: google
+        #      provider_class: App\Oauth\Domain\Security\UserProvider
+        #      client_class: App\Oauth\Domain\Security\GoogleAuthenticator
       # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters
       # access_type: online
       # Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param

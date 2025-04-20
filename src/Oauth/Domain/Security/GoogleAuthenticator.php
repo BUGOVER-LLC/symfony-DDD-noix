@@ -36,12 +36,16 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
 
     public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
+        $this->logger->info('OAUTH GOOGLE START');
+
         return new RedirectResponse($this->router->generate('google_auth_start'), Response::HTTP_TEMPORARY_REDIRECT);
     }
 
     public function supports(Request $request): ?bool
     {
-        return 'google_connect_login' === $request->attributes->get('_route');
+        $this->logger->info('OAUTH GOOGLE SUPPORTS:');
+
+        return 'google_auth_login' === $request->attributes->get('_route');
     }
 
     public function authenticate(Request $request): Passport
@@ -49,16 +53,18 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
         $client = $this->clientRegistry->getClient('google');
         $accessToken = $this->fetchAccessToken($client);
 
+        $this->logger->info('OAUTH GOOGLE AUTHENTICATE');
+
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 /* @var GoogleUser $googleUser */
                 $googleUser = $client->fetchUserFromToken($accessToken);
-                $user = $this->userRepository->findOneBy(['google_id' => $googleUser->getId()]);
+                $user = $this->userRepository->findOneBy(['googleId' => $googleUser->getId()]);
 
                 if (null === $user) {
                     $user = new User();
-                    $user->setGoogleId($googleUser->getEmail());
-                    $user->setEmail($googleUser->getId());
+                    $user->setGoogleId($googleUser->getId());
+                    $user->setEmail($googleUser->getEmail());
 
                     $this->em->persist($user);
                     $this->em->flush();
@@ -71,14 +77,14 @@ final class GoogleAuthenticator extends OAuth2Authenticator implements Authentic
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $this->logger->info('OAUTH GOOGLE');
+        $this->logger->info('OAUTH GOOGLE SUCCESS');
 
         return new Response();
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $this->logger->info($exception->getMessage());
+        $this->logger->info('OAUTH GOOGLE FAILED');
 
         return new Response($exception->getMessage());
     }
