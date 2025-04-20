@@ -35,6 +35,8 @@ security:
       jwt: ~
 
     oauth:
+      pattern: ^/oauth-
+      stateless: true
       lazy: true
       provider: app_user_provider
       custom_authenticators:

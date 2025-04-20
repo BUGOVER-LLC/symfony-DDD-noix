@@ -7,6 +7,7 @@ namespace App\Acl\Domain\Fixture;
 use App\Acl\Domain\Factory\RoleFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 class RoleFixture extends Fixture
@@ -18,7 +19,7 @@ class RoleFixture extends Fixture
     {
     }
 
-    #[\Override] public function load(ObjectManager $manager): void
+    #[Override] public function load(ObjectManager $manager): void
     {
         $roles = $this->params->get('security.role_hierarchy.roles');
 

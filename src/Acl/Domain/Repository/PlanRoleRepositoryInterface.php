@@ -6,5 +6,4 @@ namespace App\Acl\Domain\Repository;
 
 interface PlanRoleRepositoryInterface
 {
-
 }

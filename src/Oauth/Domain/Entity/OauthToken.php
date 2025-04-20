@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Media\Domain\Entity;
+namespace App\Oauth\Domain\Entity;
 
-use App\Channels\Domain\Entity\Channel;
-use App\Messages\Domain\Entity\Message;
 use App\Shared\Application\Doctrine\Timestamp\Timestampable;
-use App\Media\Domain\Enum\Bucket;
 use App\Shared\Domain\Service\UlidService;
 
-class Document extends SuperMedia
+class OauthToken
 {
     use Timestampable;
 
     private string $id;
+
+    private string $token;
 
     public function __construct()
     {
@@ -24,5 +23,17 @@ class Document extends SuperMedia
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): OauthToken
+    {
+        $this->token = $token;
+
+        return $this;
     }
 }
