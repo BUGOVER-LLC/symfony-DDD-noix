@@ -13,5 +13,3 @@
 - [x] Postgresql or similar SQL (5+ year)
 - [x] DDD architecture pattern in real work(1-2 + year)
 - [ ] Preferably (Docker, Nginx)
-
-![onionhexagonal.webp](var/dev/onion-hexagonal.webp)
