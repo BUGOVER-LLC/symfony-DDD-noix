@@ -1,4 +1,4 @@
-### ! The project has migrated to Gitlab (by invitation only) !
+### The project has migrated to Gitlab (by invitation only) !
 
 ---
 
