@@ -1,4 +1,4 @@
-## Symfony Corporate Messenger app (Generated on DDD(CQRS), Flex Skeleton)
+## Corporate Messenger app (Generated on DDD(CQRS), Flex Skeleton)
 
 ### Those who wish can join the project (Of course this is a joke, not all 🙂)
 
