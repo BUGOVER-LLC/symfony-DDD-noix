@@ -1,3 +1,5 @@
+### The project has migrated to Gitlab
+
 ## Corporate Messenger app (Generated on DDD(CQRS), Flex Skeleton)
 
 ### Those who wish can join the project (Of course this is a joke, not all 🙂)
