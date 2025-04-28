@@ -1,9 +1,0 @@
-# https://github.com/markitosgv/JWTRefreshTokenBundle
-
-gesdinet_jwt_refresh_token:
-  ttl: 5184000 # 60 days
-  ttl_update: true
-  token_parameter_name: refresh_token
-  return_expiration: true
-  return_expiration_parameter_name: refresh_token_expiration
-  refresh_token_class: App\User\Domain\Entity\RefreshToken
