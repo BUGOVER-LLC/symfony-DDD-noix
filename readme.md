@@ -1,6 +1,4 @@
-### The project has migrated to Gitlab (by invitation only) !
-
-<code style="color : name_color">text</code>
+### ! The project has migrated to Gitlab (by invitation only) !
 
 ---
 
