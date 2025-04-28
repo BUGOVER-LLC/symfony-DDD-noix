@@ -1,8 +1,6 @@
 ### The project has migrated to Gitlab (by invitation only) !
 
-<span style="color:red">
- Text content
-</span>
+<code style="color : name_color">text</code>
 
 ---
 
