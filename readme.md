@@ -1,7 +1,9 @@
 ### The project has migrated to Gitlab (by invitation only) !
+
 <span style="color:red">
-Text content
+ Text content
 </span>
+
 ---
 
 ## Corporate Messenger app (Generated on DDD(CQRS), Flex Skeleton)
